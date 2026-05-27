@@ -1,3 +1,2 @@
 dist-electron/
-node-modules/
-node_modules/
+node[_-]modules/
