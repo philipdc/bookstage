@@ -1,0 +1,3049 @@
+# TurboCASH books.fdb Schema
+
+Database: `D:\dev2023\turbocash-next\books\4-EN-UK-GENERIC\books.fdb`
+Generated: `2026-05-14T13:05:01.217Z`
+Tables: `113`
+
+## ABREVIAT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| CKEY | CHAR(10) | No |  |
+| SABREVIATION | VARCHAR(30) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `PK_ABREVIAT` (CKEY)
+
+## ACCOUNT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WACCOUNTID | INTEGER | No |  |
+| SACCOUNTCODE | VARCHAR(7) | Yes |  |
+| SMAINACCOUNTCODE | VARCHAR(4) | Yes |  |
+| SSUBACCOUNTCODE | VARCHAR(3) | Yes |  |
+| SDESCRIPTION | VARCHAR(128) | Yes |  |
+| WACCOUNTTYPEID | INTEGER | No |  |
+| WREPORTINGGROUP1ID | INTEGER | No |  |
+| WREPORTINGGROUP2ID | INTEGER | No |  |
+| BSUBACCOUNTS | SMALLINT | No |  |
+| BINCOMEEXPENSE | SMALLINT | No |  |
+| BOPENITEM | SMALLINT | Yes |  |
+| BINACTIVE | SMALLINT | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WLINKACCOUNT | INTEGER | Yes |  |
+| WTAXACCOUNT | INTEGER | Yes |  |
+| WCURRENCYID | INTEGER | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_ACCOUNT_GROUP1` (WREPORTINGGROUP1ID)
+- FOREIGN KEY: `FK_ACCOUNT_GROUP2` (WREPORTINGGROUP2ID)
+- PRIMARY KEY: `INTEG_9` (WACCOUNTID)
+
+## ACCOUNTREF
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WACCOUNTREFID | INTEGER | Yes |  |
+| SREFERENCE | VARCHAR(35) | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+
+## ACCOUNT_TRANSLATE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WACCOUNTID | INTEGER | No |  |
+| WLANGUAGEID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(255) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_ACCOUNT_TRANSLATE_ACC` (WACCOUNTID)
+- FOREIGN KEY: `FK_ACCOUNT_TRANSLATE_WTRN` (WLANGUAGEID)
+
+## ACC_GROUP_SBR_REFS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSBRID | INTEGER | No |  |
+| WTYPEID | INTEGER | No |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| WGROUPID | INTEGER | Yes |  |
+| SREFERENCECODE | VARCHAR(40) | Yes |  |
+| SACCOUNTCODE | VARCHAR(40) | Yes |  |
+| SDESCRIPTION | VARCHAR(200) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_ACC_GROUP_SBR_REFS_ACC` (WACCOUNTID)
+- FOREIGN KEY: `FK_ACC_GROUP_SBR_REFS_GR` (WGROUPID)
+- PRIMARY KEY: `INTEG_288` (WSBRID)
+
+## ADDRESSPERACCOUNT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WADDRESSPERACCOUNTID | INTEGER | No |  |
+| WACCOUNTID | INTEGER | No |  |
+| WCONTACTID | INTEGER | No |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_13` (WADDRESSPERACCOUNTID)
+
+## ASSETMAS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WASSETID | INTEGER | No |  |
+| SDESRIPTION | VARCHAR(64) | Yes |  |
+| WLOCATIONID | INTEGER | Yes |  |
+| WGROUP1ID | INTEGER | No |  |
+| WGROUP2ID | INTEGER | No |  |
+| SASSETCODE | VARCHAR(15) | Yes |  |
+| SSUBASSETCODE | VARCHAR(15) | Yes |  |
+| SSERIALNO | VARCHAR(25) | Yes |  |
+| DDEPSTART | TIMESTAMP | Yes |  |
+| DDEPEND | TIMESTAMP | Yes |  |
+| DBUY | TIMESTAMP | Yes |  |
+| DASSETOUT | TIMESTAMP | Yes |  |
+| WDEPTYPEID | INTEGER | Yes |  |
+| FDEPRATE | NUMERIC(12, 2) | Yes |  |
+| FTAXRATE | NUMERIC(12, 2) | Yes |  |
+| WTAXTYPE | INTEGER | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| WSUPPLIERID | INTEGER | Yes |  |
+| BDISABLED | SMALLINT | Yes |  |
+| FCOSTPRICE | NUMERIC(12, 2) | Yes |  |
+| FPURPRICE | NUMERIC(12, 2) | Yes |  |
+| FCAPTAXAMT | NUMERIC(12, 2) | Yes |  |
+| FMARKETVALUE | NUMERIC(12, 2) | Yes |  |
+| FBOOKVALUE | NUMERIC(12, 2) | Yes |  |
+| FUNSED1 | NUMERIC(12, 2) | Yes |  |
+| FUNSED2 | NUMERIC(12, 2) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WACCOUNTID | INTEGER | No |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_18` (WASSETID)
+
+## BACKORD
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WBACKORDERID | INTEGER | No |  |
+| WACCOUNTID | INTEGER | No |  |
+| WSTOCKID | INTEGER | No |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| FSELLINGPRICE | NUMERIC(18, 8) | Yes |  |
+| BSELECTED | SMALLINT | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| SSOURCE | VARCHAR(40) | Yes |  |
+| FDISCOUNT | NUMERIC(12, 4) | Yes |  |
+| FPRICE | NUMERIC(12, 4) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+| WDESCRIPTIONID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_22` (WBACKORDERID)
+
+## BANK
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WACCOUNTID | INTEGER | No |  |
+| WCONTACTID | INTEGER | Yes |  |
+| WRECEIPTSID | INTEGER | Yes |  |
+| WPAYMENTSID | INTEGER | Yes |  |
+| WCURRENCYID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_BANK_ACCOUNT` (WACCOUNTID)
+- PRIMARY KEY: `INTEG_24` (WACCOUNTID)
+
+## BAT0T10
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLINEID | INTEGER | No |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| SACCOUNT | VARCHAR(8) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FDEBIT | NUMERIC(18, 8) | Yes |  |
+| FCREDIT | NUMERIC(18, 8) | Yes |  |
+| FAMOUNT | NUMERIC(18, 8) | Yes |  |
+| STAX | VARCHAR(8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SCONTRAACCOUNT | VARCHAR(8) | Yes |  |
+| WCONTRAACCOUNTID | INTEGER | Yes |  |
+| FTAXAMOUNT | NUMERIC(18, 8) | Yes |  |
+| DALLOCATEDDATE | TIMESTAMP | Yes |  |
+| BRECONCILED | INTEGER | Yes |  |
+| BEXCLUSIVE | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WTAX2ID | INTEGER | Yes |  |
+| NOTUSED | NUMERIC(18, 8) | Yes |  |
+| SPROFILE | VARCHAR(64) | Yes |  |
+| SJOBCODE | VARCHAR(8) | Yes |  |
+| STAX2 | VARCHAR(8) | Yes |  |
+| BLINKED | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FTAX2AMOUNT | NUMERIC(18, 8) | Yes |  |
+| WLINKEDID | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| DPAYMENTDATE | TIMESTAMP | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(18, 8) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_311` (WLINEID)
+
+## BAT0T11
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLINEID | INTEGER | No |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| SACCOUNT | VARCHAR(8) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FDEBIT | NUMERIC(18, 8) | Yes |  |
+| FCREDIT | NUMERIC(18, 8) | Yes |  |
+| FAMOUNT | NUMERIC(18, 8) | Yes |  |
+| STAX | VARCHAR(8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SCONTRAACCOUNT | VARCHAR(8) | Yes |  |
+| WCONTRAACCOUNTID | INTEGER | Yes |  |
+| FTAXAMOUNT | NUMERIC(18, 8) | Yes |  |
+| DALLOCATEDDATE | TIMESTAMP | Yes |  |
+| BRECONCILED | INTEGER | Yes |  |
+| BEXCLUSIVE | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WTAX2ID | INTEGER | Yes |  |
+| NOTUSED | NUMERIC(18, 8) | Yes |  |
+| SPROFILE | VARCHAR(64) | Yes |  |
+| SJOBCODE | VARCHAR(8) | Yes |  |
+| STAX2 | VARCHAR(8) | Yes |  |
+| BLINKED | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FTAX2AMOUNT | NUMERIC(18, 8) | Yes |  |
+| WLINKEDID | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| DPAYMENTDATE | TIMESTAMP | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(18, 8) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_313` (WLINEID)
+
+## BAT0T12
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLINEID | INTEGER | No |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| SACCOUNT | VARCHAR(8) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FDEBIT | NUMERIC(18, 8) | Yes |  |
+| FCREDIT | NUMERIC(18, 8) | Yes |  |
+| FAMOUNT | NUMERIC(18, 8) | Yes |  |
+| STAX | VARCHAR(8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SCONTRAACCOUNT | VARCHAR(8) | Yes |  |
+| WCONTRAACCOUNTID | INTEGER | Yes |  |
+| FTAXAMOUNT | NUMERIC(18, 8) | Yes |  |
+| DALLOCATEDDATE | TIMESTAMP | Yes |  |
+| BRECONCILED | INTEGER | Yes |  |
+| BEXCLUSIVE | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WTAX2ID | INTEGER | Yes |  |
+| NOTUSED | NUMERIC(18, 8) | Yes |  |
+| SPROFILE | VARCHAR(64) | Yes |  |
+| SJOBCODE | VARCHAR(8) | Yes |  |
+| STAX2 | VARCHAR(8) | Yes |  |
+| BLINKED | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FTAX2AMOUNT | NUMERIC(18, 8) | Yes |  |
+| WLINKEDID | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| DPAYMENTDATE | TIMESTAMP | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(18, 8) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_315` (WLINEID)
+
+## BAT0T3
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLINEID | INTEGER | No |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| SACCOUNT | VARCHAR(8) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FDEBIT | NUMERIC(18, 8) | Yes |  |
+| FCREDIT | NUMERIC(18, 8) | Yes |  |
+| FAMOUNT | NUMERIC(18, 8) | Yes |  |
+| STAX | VARCHAR(8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SCONTRAACCOUNT | VARCHAR(8) | Yes |  |
+| WCONTRAACCOUNTID | INTEGER | Yes |  |
+| FTAXAMOUNT | NUMERIC(18, 8) | Yes |  |
+| DALLOCATEDDATE | TIMESTAMP | Yes |  |
+| BRECONCILED | INTEGER | Yes |  |
+| BEXCLUSIVE | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WTAX2ID | INTEGER | Yes |  |
+| NOTUSED | NUMERIC(18, 8) | Yes |  |
+| SPROFILE | VARCHAR(64) | Yes |  |
+| SJOBCODE | VARCHAR(8) | Yes |  |
+| STAX2 | VARCHAR(8) | Yes |  |
+| BLINKED | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FTAX2AMOUNT | NUMERIC(18, 8) | Yes |  |
+| WLINKEDID | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| DPAYMENTDATE | TIMESTAMP | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(18, 8) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_303` (WLINEID)
+
+## BAT0T4
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLINEID | INTEGER | No |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| SACCOUNT | VARCHAR(8) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FDEBIT | NUMERIC(18, 8) | Yes |  |
+| FCREDIT | NUMERIC(18, 8) | Yes |  |
+| FAMOUNT | NUMERIC(18, 8) | Yes |  |
+| STAX | VARCHAR(8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SCONTRAACCOUNT | VARCHAR(8) | Yes |  |
+| WCONTRAACCOUNTID | INTEGER | Yes |  |
+| FTAXAMOUNT | NUMERIC(18, 8) | Yes |  |
+| DALLOCATEDDATE | TIMESTAMP | Yes |  |
+| BRECONCILED | INTEGER | Yes |  |
+| BEXCLUSIVE | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WTAX2ID | INTEGER | Yes |  |
+| NOTUSED | NUMERIC(18, 8) | Yes |  |
+| SPROFILE | VARCHAR(64) | Yes |  |
+| SJOBCODE | VARCHAR(8) | Yes |  |
+| STAX2 | VARCHAR(8) | Yes |  |
+| BLINKED | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FTAX2AMOUNT | NUMERIC(18, 8) | Yes |  |
+| WLINKEDID | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| DPAYMENTDATE | TIMESTAMP | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(18, 8) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_305` (WLINEID)
+
+## BAT0T7
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLINEID | INTEGER | No |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| SACCOUNT | VARCHAR(8) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FDEBIT | NUMERIC(18, 8) | Yes |  |
+| FCREDIT | NUMERIC(18, 8) | Yes |  |
+| FAMOUNT | NUMERIC(18, 8) | Yes |  |
+| STAX | VARCHAR(8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SCONTRAACCOUNT | VARCHAR(8) | Yes |  |
+| WCONTRAACCOUNTID | INTEGER | Yes |  |
+| FTAXAMOUNT | NUMERIC(18, 8) | Yes |  |
+| DALLOCATEDDATE | TIMESTAMP | Yes |  |
+| BRECONCILED | INTEGER | Yes |  |
+| BEXCLUSIVE | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WTAX2ID | INTEGER | Yes |  |
+| NOTUSED | NUMERIC(18, 8) | Yes |  |
+| SPROFILE | VARCHAR(64) | Yes |  |
+| SJOBCODE | VARCHAR(8) | Yes |  |
+| STAX2 | VARCHAR(8) | Yes |  |
+| BLINKED | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FTAX2AMOUNT | NUMERIC(18, 8) | Yes |  |
+| WLINKEDID | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| DPAYMENTDATE | TIMESTAMP | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(18, 8) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_307` (WLINEID)
+
+## BAT0T9
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLINEID | INTEGER | No |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| SACCOUNT | VARCHAR(8) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FDEBIT | NUMERIC(18, 8) | Yes |  |
+| FCREDIT | NUMERIC(18, 8) | Yes |  |
+| FAMOUNT | NUMERIC(18, 8) | Yes |  |
+| STAX | VARCHAR(8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SCONTRAACCOUNT | VARCHAR(8) | Yes |  |
+| WCONTRAACCOUNTID | INTEGER | Yes |  |
+| FTAXAMOUNT | NUMERIC(18, 8) | Yes |  |
+| DALLOCATEDDATE | TIMESTAMP | Yes |  |
+| BRECONCILED | INTEGER | Yes |  |
+| BEXCLUSIVE | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WTAX2ID | INTEGER | Yes |  |
+| NOTUSED | NUMERIC(18, 8) | Yes |  |
+| SPROFILE | VARCHAR(64) | Yes |  |
+| SJOBCODE | VARCHAR(8) | Yes |  |
+| STAX2 | VARCHAR(8) | Yes |  |
+| BLINKED | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FTAX2AMOUNT | NUMERIC(18, 8) | Yes |  |
+| WLINKEDID | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| DPAYMENTDATE | TIMESTAMP | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(18, 8) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_309` (WLINEID)
+
+## BATCON
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WBATCHID | INTEGER | No |  |
+| WUSERID | INTEGER | No |  |
+| WBATCHTYPEID | INTEGER | No |  |
+| SBATCHNUMBER | VARCHAR(8) | Yes |  |
+| BPOSTED | SMALLINT | Yes |  |
+| BIMPORTED | SMALLINT | Yes |  |
+| BDOCSOURCE | SMALLINT | Yes |  |
+| WLINECOUNT | INTEGER | Yes |  |
+| SFILENAME | VARCHAR(16) | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WINITBATID | INTEGER | Yes |  |
+| SALIAS | VARCHAR(15) | Yes |  |
+| SUNIQUEID | VARCHAR(8) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_28` (WBATCHID)
+
+## BATTYPES
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WBATCHTYPEID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(16) | Yes |  |
+| BCASHBOOK | SMALLINT | Yes |  |
+| WCONTRAACCOUNTID | INTEGER | Yes |  |
+| BCONTRAPERLINE | SMALLINT | Yes |  |
+| BINCREMENTREFNO | SMALLINT | Yes |  |
+| BREPEATDETAILS | SMALLINT | Yes |  |
+| BCONSOLIDATEBALANCING | SMALLINT | Yes |  |
+| WDEBITCREDIT | INTEGER | Yes |  |
+| WPAYMENTGROUPID | INTEGER | Yes |  |
+| WDEFAULTTAXID | INTEGER | Yes |  |
+| BVIEWEXCLUSIVE | SMALLINT | Yes |  |
+| BLINKOI | SMALLINT | Yes |  |
+| BINCLUSIVEMODE | SMALLINT | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_30` (WBATCHTYPEID)
+
+## BATTYPES_TRANSLATE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WBATCHTYPEID | INTEGER | No |  |
+| WLANGUAGEID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(255) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_BATTYPES_TRANSLATE_BAT` (WBATCHTYPEID)
+- FOREIGN KEY: `FK_BATTYPES_TRANSLATE_LANG` (WLANGUAGEID)
+- PRIMARY KEY: `PK_BATTYPES_TRANSLATE` (WBATCHTYPEID, WLANGUAGEID)
+
+## BOM
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WBOMID | INTEGER | No |  |
+| WSTOCKID | INTEGER | No |  |
+| WLINKEDSTOCKID | INTEGER | No |  |
+| FQTY | NUMERIC(12, 2) | No |  |
+| FPERCENTAGEOFSALE | NUMERIC(12, 8) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_159` (WBOMID)
+
+## CONTACTS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| RECORDID | INTEGER | No |  |
+| RESOURCEID | INTEGER | No |  |
+| FIRSTNAME | VARCHAR(50) | Yes |  |
+| LASTNAME | VARCHAR(50) | Yes |  |
+| BIRTHDATE | TIMESTAMP | Yes |  |
+| ANNIVERSARY | TIMESTAMP | Yes |  |
+| TITLE | VARCHAR(50) | Yes |  |
+| COMPANY | VARCHAR(50) | Yes |  |
+| GENDER | VARCHAR(1) | Yes |  |
+| JOB_POSITION | VARCHAR(30) | Yes |  |
+| ADDRESS | VARCHAR(100) | Yes |  |
+| CITY | VARCHAR(50) | Yes |  |
+| STATE | VARCHAR(25) | Yes |  |
+| ZIP | VARCHAR(10) | Yes |  |
+| COUNTRY | VARCHAR(25) | Yes |  |
+| NOTE | VARCHAR(255) | Yes |  |
+| PHONE1 | VARCHAR(25) | Yes |  |
+| PHONE2 | VARCHAR(25) | Yes |  |
+| PHONE3 | VARCHAR(25) | Yes |  |
+| PHONE4 | VARCHAR(25) | Yes |  |
+| PHONE5 | VARCHAR(25) | Yes |  |
+| PHONETYPE1 | INTEGER | Yes |  |
+| PHONETYPE2 | INTEGER | Yes |  |
+| PHONETYPE3 | INTEGER | Yes |  |
+| PHONETYPE4 | INTEGER | Yes |  |
+| PHONETYPE5 | INTEGER | Yes |  |
+| CATEGORY | INTEGER | Yes |  |
+| EMAIL | VARCHAR(100) | Yes |  |
+| CUSTOM1 | VARCHAR(100) | Yes |  |
+| CUSTOM2 | VARCHAR(100) | Yes |  |
+| CUSTOM3 | VARCHAR(100) | Yes |  |
+| CUSTOM4 | VARCHAR(100) | Yes |  |
+| USERFIELD0 | VARCHAR(100) | Yes |  |
+| USERFIELD1 | VARCHAR(100) | Yes |  |
+| USERFIELD2 | VARCHAR(100) | Yes |  |
+| USERFIELD3 | VARCHAR(100) | Yes |  |
+| USERFIELD4 | VARCHAR(100) | Yes |  |
+| USERFIELD5 | VARCHAR(100) | Yes |  |
+| USERFIELD6 | VARCHAR(100) | Yes |  |
+| USERFIELD7 | VARCHAR(100) | Yes |  |
+| USERFIELD8 | VARCHAR(100) | Yes |  |
+| USERFIELD9 | VARCHAR(100) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_33` (RECORDID)
+
+## COUNTRIES
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| COUNTRIES_ID | INTEGER | No |  |
+| COUNTRIES_NAME | VARCHAR(64) | No |  |
+| COUNTRIES_ISO_CODE_2 | VARCHAR(2) | No |  |
+| COUNTRIES_ISO_CODE_3 | VARCHAR(3) | No |  |
+| ADDRESS_FORMAT_ID | INTEGER | No |  |
+| SNUMERIC | VARCHAR(3) | Yes |  |
+| WTAXACCOUNTID | INTEGER | Yes |  |
+| WSALESACCOUNTID | INTEGER | Yes |  |
+| WSTOCKACCOUNTID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_165` (COUNTRIES_ID)
+
+## CREDITOR
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WACCOUNTID | INTEGER | No |  |
+| SCODE | VARCHAR(6) | Yes |  |
+| WCONTACTID | INTEGER | No |  |
+| SPASSWORD | VARCHAR(8) | Yes |  |
+| SPOSTAL1 | VARCHAR(30) | Yes |  |
+| SPOSTAL2 | VARCHAR(30) | Yes |  |
+| SPOSTAL3 | VARCHAR(30) | Yes |  |
+| SPOSTALCODE | VARCHAR(8) | Yes |  |
+| WPOSTCOUNTRIES_ID | INTEGER | Yes |  |
+| SDELIVERY1 | VARCHAR(30) | Yes |  |
+| SDELIVERY2 | VARCHAR(30) | Yes |  |
+| SDELIVERY3 | VARCHAR(30) | Yes |  |
+| WDELCOUNTRIES_ID | INTEGER | Yes |  |
+| STELEPHONE1 | VARCHAR(20) | Yes |  |
+| STELEPHONE2 | VARCHAR(20) | Yes |  |
+| SFAX | VARCHAR(20) | Yes |  |
+| SEMAIL | VARCHAR(50) | Yes |  |
+| WBANKNAME | VARCHAR(20) | Yes |  |
+| SBRANCHCODE | VARCHAR(10) | Yes |  |
+| SBANKACCOUNTNUMBER | VARCHAR(45) | Yes |  |
+| SBANKACCOUNTNAME | VARCHAR(30) | Yes |  |
+| FCREDITLIMIT | NUMERIC(12, 2) | Yes |  |
+| FCHARGEAMOUNT | NUMERIC(12, 2) | Yes |  |
+| BOPENITEM | SMALLINT | Yes |  |
+| BPOSTBBF | SMALLINT | Yes |  |
+| DLASTACTIVITY | TIMESTAMP | Yes |  |
+| WCURRENCYID | INTEGER | Yes |  |
+| WFOREXACCOUNTID | INTEGER | Yes |  |
+| SMESSAGE | VARCHAR(50) | Yes |  |
+| SREFERENCE | VARCHAR(20) | Yes |  |
+| FDISCOUNT | NUMERIC(12, 2) | Yes |  |
+| WDEFAULTPRICETYPEID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WDUEDAYS | INTEGER | Yes |  |
+| WDEFAULTACCOUNT | INTEGER | Yes |  |
+| WDEFAULTTAX | INTEGER | Yes |  |
+| SCOMPANYREGNO | VARCHAR(64) | Yes |  |
+| SFREEFIELD1 | VARCHAR(64) | Yes |  |
+| SFREEFIELD2 | VARCHAR(64) | Yes |  |
+| SFREEFIELD3 | VARCHAR(64) | Yes |  |
+| SLANGUAGE | VARCHAR(35) | Yes |  |
+| SDELIVERYCODE | VARCHAR(8) | Yes |  |
+| SLAYOUTINVOICE | VARCHAR(35) | Yes |  |
+| SLAYOUTCREDITNOTE | VARCHAR(35) | Yes |  |
+| SLAYOUTQUOTE | VARCHAR(35) | Yes |  |
+| SWEBSITE | VARCHAR(120) | Yes |  |
+| WTRANSMISSIONTYPE | INTEGER | Yes |  |
+| SCREDITCARDNUMBER | VARCHAR(35) | Yes |  |
+| SCREDITCARDHOLDER | VARCHAR(20) | Yes |  |
+| SBANKNAME | VARCHAR(20) | Yes |  |
+| DEXPIRYDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_CREDITOR_ACCOUNT` (WACCOUNTID)
+- PRIMARY KEY: `INTEG_36` (WACCOUNTID)
+
+## CURRENCY
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WCURRENCYID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(30) | Yes |  |
+| SSYMBOL | VARCHAR(6) | Yes |  |
+| FRATE2 | NUMERIC(12, 2) | Yes |  |
+| FRETE3 | NUMERIC(12, 2) | Yes |  |
+| FRATE4 | NUMERIC(12, 2) | Yes |  |
+| FRATE5 | NUMERIC(12, 2) | Yes |  |
+| FRATE6 | NUMERIC(12, 2) | Yes |  |
+| FRATE7 | NUMERIC(12, 2) | Yes |  |
+| FRATE8 | NUMERIC(12, 2) | Yes |  |
+| FRATE9 | NUMERIC(12, 2) | Yes |  |
+| FRATE10 | NUMERIC(12, 2) | Yes |  |
+| FRATE11 | NUMERIC(12, 2) | Yes |  |
+| FRATE12 | NUMERIC(12, 2) | Yes |  |
+| FRATE13 | NUMERIC(12, 2) | Yes |  |
+| FRATE14 | NUMERIC(12, 2) | Yes |  |
+| FRATE15 | NUMERIC(12, 2) | Yes |  |
+| FRATE16 | NUMERIC(12, 2) | Yes |  |
+| FRATE17 | NUMERIC(12, 2) | Yes |  |
+| FRATE18 | NUMERIC(12, 2) | Yes |  |
+| FRATE19 | NUMERIC(12, 2) | Yes |  |
+| FRATE20 | NUMERIC(12, 2) | Yes |  |
+| FRATE21 | NUMERIC(12, 2) | Yes |  |
+| FRATE22 | NUMERIC(12, 2) | Yes |  |
+| FRATE23 | NUMERIC(12, 2) | Yes |  |
+| FRATE24 | NUMERIC(12, 2) | Yes |  |
+| FRATE25 | NUMERIC(12, 2) | Yes |  |
+| FRATE26 | NUMERIC(12, 2) | Yes |  |
+| WCONTRYID | INTEGER | Yes |  |
+| WVARIANCEACCOUNTID | INTEGER | Yes |  |
+| WNOOFDECIMALS | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FRATE1_1 | NUMERIC(12, 8) | Yes |  |
+| FRATE1 | NUMERIC(12, 8) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_38` (WCURRENCYID)
+
+## DEBTOR
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WACCOUNTID | INTEGER | No |  |
+| WCONTACTID | INTEGER | Yes |  |
+| SPASSWORD | VARCHAR(8) | Yes |  |
+| SPOSTAL1 | VARCHAR(30) | Yes |  |
+| SPOSTAL2 | VARCHAR(30) | Yes |  |
+| SPOSTAL3 | VARCHAR(30) | Yes |  |
+| WPOSTCOUNTRIES_ID | INTEGER | Yes |  |
+| SPOSTALCODE | VARCHAR(8) | Yes |  |
+| SDELIVERY1 | VARCHAR(30) | Yes |  |
+| SDELIVERY2 | VARCHAR(30) | Yes |  |
+| SDELIVERY3 | VARCHAR(30) | Yes |  |
+| WDELCOUNTRIES_ID | INTEGER | Yes |  |
+| SDELIVERYCODE | VARCHAR(8) | Yes |  |
+| STELEPHONE1 | VARCHAR(20) | Yes |  |
+| STELEPHONE2 | VARCHAR(20) | Yes |  |
+| SFAX | VARCHAR(20) | Yes |  |
+| SEMAIL | VARCHAR(50) | Yes |  |
+| SBANKNAME | VARCHAR(20) | Yes |  |
+| SBRANCHCODE | VARCHAR(10) | Yes |  |
+| SBANKACCOUNTNUMBER | VARCHAR(45) | Yes |  |
+| SBANKACCOUNTNAME | VARCHAR(30) | Yes |  |
+| SCREDITCARDNUMBER | VARCHAR(64) | Yes |  |
+| DEXPIRYDATE | TIMESTAMP | Yes |  |
+| SCREDITCARDTYPE | VARCHAR(20) | Yes |  |
+| SCREDITCARDHOLDER | VARCHAR(20) | Yes |  |
+| FCREDITLIMIT | NUMERIC(12, 2) | Yes |  |
+| FCHARGEAMOUNT | NUMERIC(12, 2) | Yes |  |
+| FDISCOUNT | NUMERIC(12, 2) | Yes |  |
+| FINTEREST | NUMERIC(12, 2) | Yes |  |
+| WBANKID | INTEGER | Yes |  |
+| WSALESMANID | INTEGER | Yes |  |
+| BOPENITEM | SMALLINT | Yes |  |
+| BPOSTBBF | SMALLINT | Yes |  |
+| BDISABLED | SMALLINT | Yes |  |
+| SMESSAGE | VARCHAR(50) | Yes |  |
+| WDEFAULTPRICETYPEID | INTEGER | Yes |  |
+| DLASTACTIVITY | TIMESTAMP | Yes |  |
+| WCURRENCYID | INTEGER | Yes |  |
+| WFOREXACCOUNTID | INTEGER | Yes |  |
+| SREFERENCE | VARCHAR(20) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WDUEDAYS | INTEGER | Yes |  |
+| DREMITTANCE | TIMESTAMP | Yes |  |
+| WDEFAULTACCOUNT | INTEGER | Yes |  |
+| WDEFAULTTAX | INTEGER | Yes |  |
+| SCOMPANYREGNO | VARCHAR(64) | Yes |  |
+| SFREEFIELD1 | VARCHAR(64) | Yes |  |
+| SFREEFIELD2 | VARCHAR(64) | Yes |  |
+| SFREEFIELD3 | VARCHAR(64) | Yes |  |
+| SLANGUAGE | VARCHAR(35) | Yes |  |
+| SLAYOUTINVOICE | VARCHAR(35) | Yes |  |
+| SLAYOUTCREDITNOTE | VARCHAR(35) | Yes |  |
+| SLAYOUTQUOTE | VARCHAR(35) | Yes |  |
+| SWEBSITE | VARCHAR(120) | Yes |  |
+| WTRANSMISSIONTYPE | INTEGER | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_DEBTOR_ACCOUNT` (WACCOUNTID)
+- PRIMARY KEY: `INTEG_40` (WACCOUNTID)
+
+## DNLBANKS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| STRANSID | VARCHAR(32) | No |  |
+| WLINETYPEID | INTEGER | Yes |  |
+| WSOURCEID | INTEGER | Yes |  |
+| WBANKID | INTEGER | Yes |  |
+| WTRANSTYPEID | INTEGER | Yes |  |
+| SACCOUNTCODE | VARCHAR(40) | Yes |  |
+| DTRANSDATE | TIMESTAMP | Yes |  |
+| DPOSTEDDATE | TIMESTAMP | Yes |  |
+| FAMOUNT | NUMERIC(12, 2) | Yes |  |
+| SMEMO | VARCHAR(40) | Yes |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| BRECONCILED | SMALLINT | Yes |  |
+| SDESCRIPTION | VARCHAR(40) | Yes |  |
+| WCURRENCYID | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| WLINEID | INTEGER | Yes |  |
+| WTCTRANSID | INTEGER | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WAUTOMATCHID | INTEGER | Yes |  |
+| BUSEFORBATCH | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WAMTSGN | INTEGER | Yes |  |
+| SEXTRADESCRIPTION | VARCHAR(255) | Yes |  |
+
+## DOCBATCH_0_0
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLINEID | INTEGER | No |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| SACCOUNT | VARCHAR(8) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FDEBIT | NUMERIC(18, 8) | Yes |  |
+| FCREDIT | NUMERIC(18, 8) | Yes |  |
+| FAMOUNT | NUMERIC(18, 8) | Yes |  |
+| STAX | VARCHAR(8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SCONTRAACCOUNT | VARCHAR(8) | Yes |  |
+| WCONTRAACCOUNTID | INTEGER | Yes |  |
+| FTAXAMOUNT | NUMERIC(18, 8) | Yes |  |
+| DALLOCATEDDATE | TIMESTAMP | Yes |  |
+| BRECONCILED | INTEGER | Yes |  |
+| BEXCLUSIVE | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WTAX2ID | INTEGER | Yes |  |
+| NOTUSED | NUMERIC(18, 8) | Yes |  |
+| SPROFILE | VARCHAR(64) | Yes |  |
+| SJOBCODE | VARCHAR(8) | Yes |  |
+| STAX2 | VARCHAR(8) | Yes |  |
+| BLINKED | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FTAX2AMOUNT | NUMERIC(18, 8) | Yes |  |
+| WLINKEDID | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| DPAYMENTDATE | TIMESTAMP | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(18, 8) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_299` (WLINEID)
+
+## DOCHEAD
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WDOCID | INTEGER | No |  |
+| SDOCNO | VARCHAR(15) | Yes |  |
+| WTYPEID | INTEGER | No |  |
+| DDATE | TIMESTAMP | Yes |  |
+| DALLOCATEDDATE | TIMESTAMP | Yes |  |
+| WACCOUNTID | INTEGER | No |  |
+| WPAYMENTTYPEID | INTEGER | Yes |  |
+| WPOSTAL1ID | INTEGER | Yes |  |
+| WPOSTAL2ID | INTEGER | Yes |  |
+| WPOSTAL3ID | INTEGER | Yes |  |
+| WPOSCOUNTRIES_ID | INTEGER | Yes |  |
+| WPOSTALCODEID | INTEGER | Yes |  |
+| WMESSAGE1ID | INTEGER | Yes |  |
+| WMESSAGE2ID | INTEGER | Yes |  |
+| WMESSAGE3ID | INTEGER | Yes |  |
+| FINVOICEDISCOUNT | NUMERIC(12, 2) | Yes |  |
+| WSALESMANID | INTEGER | Yes |  |
+| SREFERENCE | VARCHAR(35) | Yes |  |
+| WDELADDRESS1ID | INTEGER | Yes |  |
+| WDELADDRESS2ID | INTEGER | Yes |  |
+| WDELADDRESS3ID | INTEGER | Yes |  |
+| WDELCOUNTRIES_ID | INTEGER | Yes |  |
+| WDELCODEID | INTEGER | Yes |  |
+| BPRINTED | SMALLINT | Yes |  |
+| BPOSTED | SMALLINT | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| WPAYMENTGROUPID | INTEGER | Yes |  |
+| BEXCLUSIVE | SMALLINT | Yes |  |
+| WCURRENCYID | INTEGER | Yes |  |
+| FDOCAMOUNT | NUMERIC(12, 2) | Yes |  |
+| FTAXAMOUNT | NUMERIC(12, 2) | Yes |  |
+| BREPEATING | SMALLINT | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WSOURCETYPEID | INTEGER | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WTERMS | INTEGER | Yes |  |
+| WJOBCODEID | INTEGER | Yes |  |
+| DDUEDATE | TIMESTAMP | Yes |  |
+| WUSERID | INTEGER | Yes |  |
+| SEXTERNALID | VARCHAR(50) | Yes |  |
+| WPOSTALNAME | INTEGER | Yes |  |
+| WPOSTALCONTACT | INTEGER | Yes |  |
+| WDELNAME | INTEGER | Yes |  |
+| WDELCONTACT | INTEGER | Yes |  |
+| WTAXNUMBER | INTEGER | Yes |  |
+| WCONTRAACCOUNT | INTEGER | Yes |  |
+| WOPENITEMTRANSACTID | INTEGER | Yes |  |
+| FCURRENCYRATE | NUMERIC(10, 8) | Yes |  |
+| X_CUSTOMERS_EMAIL_ADDRESS | VARCHAR(255) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_DOCHEAD_ACCOUNT` (WACCOUNTID)
+- PRIMARY KEY: `INTEG_45` (WDOCID)
+
+## DOCLINE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WDOCLINEID | INTEGER | No |  |
+| WDOCID | INTEGER | No |  |
+| WSTOCKID | INTEGER | Yes |  |
+| WLINETYPEID | INTEGER | Yes |  |
+| WDESCRIPTIONID | INTEGER | Yes |  |
+| FQTYORDERED | NUMERIC(18, 8) | Yes |  |
+| FQTYSHIPPED | NUMERIC(18, 8) | Yes |  |
+| FSELLINGPRICE | NUMERIC(18, 8) | Yes |  |
+| FITEMDISCOUNT | NUMERIC(18, 8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| FEXCLUSIVEAMT | NUMERIC(18, 8) | Yes |  |
+| FINCLUSIVEAMT | NUMERIC(18, 8) | Yes |  |
+| FTAXAMOUNT | NUMERIC(18, 8) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| SUNIT | VARCHAR(8) | Yes |  |
+| SSTOCKCODE | VARCHAR(15) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WSERIALNOID | INTEGER | Yes |  |
+| WSORTNO | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(12, 8) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_DOCLINE_DOCHEAD` (WDOCID)
+- FOREIGN KEY: `FK_DOCLINE_STOCK` (WSTOCKID)
+- PRIMARY KEY: `INTEG_48` (WDOCID, WDOCLINEID)
+
+## DOCLINEOPTIONS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WDOCLINEOPTIONSID | INTEGER | No |  |
+| WDOCID | INTEGER | Yes |  |
+| WLINEID | INTEGER | Yes |  |
+| WITEMOPTIONVALUE1ID | INTEGER | Yes |  |
+| WITEMOPTIONVALUE2ID | INTEGER | Yes |  |
+| WITEMOPTIONVALUE3ID | INTEGER | Yes |  |
+| WITEMOPTIONVALUE4ID | INTEGER | Yes |  |
+| WITEMOPTIONVALUE5ID | INTEGER | Yes |  |
+| FEXTRAPRICE | NUMERIC(12, 8) | Yes |  |
+| FQTY | NUMERIC(12, 8) | Yes |  |
+| WDESCRIPTIONID | INTEGER | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_DOCLINEOPTIONS_DESC` (WDESCRIPTIONID)
+- FOREIGN KEY: `FK_DOCLINEOPTIONS_DOCLINE` (WDOCID, WLINEID)
+- PRIMARY KEY: `INTEG_229` (WDOCLINEOPTIONSID)
+
+## DOCLINE_COMMENT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WDOCID | INTEGER | No |  |
+| WLINEID | INTEGER | No |  |
+| SCOMMENT | BLOB | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_DOCLINE_COMMENT_LINE` (WDOCID, WLINEID)
+- PRIMARY KEY: `PK_DOCLINE_COMMEN` (WDOCID, WLINEID)
+
+## DOCLINE_LINKED
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WDOCLINKED_ID | INTEGER | No |  |
+| WDOCLINEID | INTEGER | No |  |
+| WDOCID | INTEGER | No |  |
+| WSTOCKID | INTEGER | Yes |  |
+| WLINETYPEID | INTEGER | Yes |  |
+| WDESCRIPTIONID | INTEGER | Yes |  |
+| FQTYORDERED | NUMERIC(12, 8) | Yes |  |
+| FQTYSHIPPED | NUMERIC(12, 8) | Yes |  |
+| FSELLINGPRICE | NUMERIC(12, 8) | Yes |  |
+| FITEMDISCOUNT | NUMERIC(12, 8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| FEXCLUSIVEAMT | NUMERIC(12, 8) | Yes |  |
+| FINCLUSIVEAMT | NUMERIC(12, 8) | Yes |  |
+| FTAXAMOUNT | NUMERIC(12, 8) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| SUNIT | VARCHAR(8) | Yes |  |
+| SSTOCKCODE | VARCHAR(15) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WSERIALNOID | INTEGER | Yes |  |
+| WSORTNO | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(10, 8) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_262` (WDOCLINKED_ID)
+
+## DOCLINE_TRANSISTOR
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WDOCLINEID | INTEGER | No |  |
+| WDOCID | INTEGER | No |  |
+| WTRANSACCOUNT | INTEGER | No |  |
+| DFROMDATE | DATE | No |  |
+| DTODATE | DATE | No |  |
+| WSPREADTYPE | INTEGER | No |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_DOCLINE_TRANSISTOR` (WDOCID, WDOCLINEID)
+- PRIMARY KEY: `INTEG_295` (WDOCID, WDOCLINEID)
+
+## DOC_LINK
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WFROMDOCID | INTEGER | No |  |
+| WFROMDOCLINEID | INTEGER | No |  |
+| WTODOCID | INTEGER | No |  |
+| WTODOCLINEID | INTEGER | No |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_DOC_LINK_FROM` (WFROMDOCID)
+- FOREIGN KEY: `FK_DOC_LINK_TO` (WTODOCID)
+- PRIMARY KEY: `PK_DOCLINK` (WFROMDOCID, WFROMDOCLINEID, WTODOCID, WTODOCLINEID)
+
+## DOC_LOCBATSER
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLOCBATSER_ID | INTEGER | No |  |
+| WSTOCKID | INTEGER | No |  |
+| WDOCID | INTEGER | Yes |  |
+| WLINEID | INTEGER | Yes |  |
+| SDESCRIPTION | VARCHAR(40) | Yes |  |
+| DLASTSALESDATE | DATE | Yes |  |
+| FQTY | NUMERIC(12, 8) | Yes |  |
+| WLOCATIONID | INTEGER | Yes |  |
+| DCREATEDATE | DATE | Yes |  |
+| FQTYORG | NUMERIC(12, 8) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_DOC_LOCBATSER_DL` (WDOCID, WLINEID)
+- FOREIGN KEY: `INTEG_247` (WSTOCKID)
+- PRIMARY KEY: `INTEG_246` (WLOCBATSER_ID)
+
+## DOC_LOCBATSERSALE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLOCBATSERSALE_ID | INTEGER | No |  |
+| WLOCBATSER_ID | INTEGER | No |  |
+| WDOCID | INTEGER | Yes |  |
+| WLINEID | INTEGER | Yes |  |
+| WSTOCKID | INTEGER | Yes |  |
+| DLASTSALESDATE | DATE | Yes |  |
+| FQTY | NUMERIC(12, 8) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_DOC_LOCBATSERSALE_DOCLINE` (WDOCID, WLINEID)
+- FOREIGN KEY: `FK_DOC_LOCBATSER_TOSALE` (WLOCBATSER_ID)
+- PRIMARY KEY: `INTEG_250` (WLOCBATSERSALE_ID)
+
+## EMPMAS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WEMPLOYEEID | INTEGER | No |  |
+| SEMPLOYEENUMBER | VARCHAR(15) | Yes |  |
+| SFIRSTNAME | VARCHAR(20) | Yes |  |
+| SSURNAME | VARCHAR(20) | Yes |  |
+| SADDRESS1 | VARCHAR(30) | Yes |  |
+| SADDRESS2 | VARCHAR(30) | Yes |  |
+| SADDRESS3 | VARCHAR(30) | Yes |  |
+| SPOSTCODE | VARCHAR(15) | Yes |  |
+| SIDNUMBER | VARCHAR(20) | Yes |  |
+| SPASSPORTNUMBER | VARCHAR(20) | Yes |  |
+| SINCOMETAXREFNUMBER | VARCHAR(30) | Yes |  |
+| SDIRECTIVENUMBER | VARCHAR(20) | Yes |  |
+| SBRANCH | VARCHAR(30) | Yes |  |
+| DSTARTDATE | TIMESTAMP | Yes |  |
+| DTERMINATIONDATE | TIMESTAMP | Yes |  |
+| BACTIVE | SMALLINT | Yes |  |
+| DBIRTHDATE | TIMESTAMP | Yes |  |
+| WIRPTYPE | INTEGER | Yes |  |
+| SREASON | VARCHAR(30) | Yes |  |
+| WREPORTINGGROUP1 | INTEGER | Yes |  |
+| WREPORTINGGROUP2 | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| WPAYMENTMETHODID | INTEGER | Yes |  |
+| SBANKNAME | VARCHAR(20) | Yes |  |
+| SBANKACCOUNTNUMBER | VARCHAR(45) | Yes |  |
+| SBANKBRANCH | VARCHAR(20) | Yes |  |
+| FLEAVEALLOCATED | NUMERIC(12, 2) | Yes |  |
+| FLEAVETAKEN | NUMERIC(12, 2) | Yes |  |
+| SDATA1 | VARCHAR(20) | Yes |  |
+| SDATA2 | VARCHAR(20) | Yes |  |
+| SDATA3 | VARCHAR(20) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_50` (WEMPLOYEEID)
+
+## EMPSOURCE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSOURCEID | INTEGER | No |  |
+| WUNITID | INTEGER | Yes |  |
+| SDESCRIPTION | VARCHAR(20) | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| WSOURCETYPEID | INTEGER | Yes |  |
+| BTAXABLE | SMALLINT | Yes |  |
+| BACTIVE | SMALLINT | Yes |  |
+| WPARENTSOURCEID | INTEGER | Yes |  |
+| SFORMULA | VARCHAR(64) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| BFORINFO | INTEGER | Yes |  |
+| WDRACCOUNTID | INTEGER | Yes |  |
+| WCRACCOUNTID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_52` (WSOURCEID)
+
+## EVENTS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| RECORDID | INTEGER | No |  |
+| STARTTIME | TIMESTAMP | Yes |  |
+| ENDTIME | TIMESTAMP | Yes |  |
+| RESOURCEID | INTEGER | Yes |  |
+| WCONTACTID | INTEGER | Yes |  |
+| DESCRIPTION | VARCHAR(255) | Yes |  |
+| NOTES | VARCHAR(255) | Yes |  |
+| CATEGORY | INTEGER | Yes |  |
+| ALLDAYEVENT | SMALLINT | Yes |  |
+| DINGPATH | VARCHAR(255) | Yes |  |
+| ALARMSET | SMALLINT | Yes |  |
+| ALARMADVANCE | INTEGER | Yes |  |
+| ALARMADVANCETYPE | INTEGER | Yes |  |
+| SNOOZETIME | TIMESTAMP | Yes |  |
+| REPEATCODE | INTEGER | Yes |  |
+| REPEATRANGEEND | TIMESTAMP | Yes |  |
+| CUSTOMINTERVAL | INTEGER | Yes |  |
+| USERFIELD0 | VARCHAR(100) | Yes |  |
+| USERFIELD1 | VARCHAR(100) | Yes |  |
+| USERFIELD2 | VARCHAR(100) | Yes |  |
+| USERFIELD3 | VARCHAR(100) | Yes |  |
+| USERFIELD4 | VARCHAR(100) | Yes |  |
+| USERFIELD5 | VARCHAR(100) | Yes |  |
+| USERFIELD6 | VARCHAR(100) | Yes |  |
+| USERFIELD7 | VARCHAR(100) | Yes |  |
+| USERFIELD8 | VARCHAR(100) | Yes |  |
+| USERFIELD9 | VARCHAR(100) | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_54` (RECORDID)
+
+## EVENTSPECIALDAYS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WEVENTSPECIALDAY_ID | INTEGER | No |  |
+| WTYPEID | INTEGER | Yes |  |
+| WRESOURCEID | INTEGER | Yes |  |
+| WCOLOR | INTEGER | Yes |  |
+| WPRIORITY | INTEGER | Yes |  |
+| DSTARTDATETIME | TIMESTAMP | Yes |  |
+| DENDDATETIME | TIMESTAMP | Yes |  |
+| SDESCRIPTION | VARCHAR(50) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_EVENTSPECIALDAYS_EVENT` (WRESOURCEID)
+- PRIMARY KEY: `INTEG_215` (WEVENTSPECIALDAY_ID)
+
+## FLOWTMP
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WACCOUNTID | INTEGER | No |  |
+| WBATCHID | INTEGER | Yes |  |
+| SDESCRIPTION | VARCHAR(32) | Yes |  |
+| WPERIODID | INTEGER | Yes |  |
+| SCODE | VARCHAR(8) | Yes |  |
+| FAMOUNT1 | NUMERIC(12, 2) | Yes |  |
+| FAMOUNT2 | NUMERIC(12, 2) | Yes |  |
+| FAMOUNT3 | NUMERIC(12, 2) | Yes |  |
+| FAMOUNT4 | NUMERIC(12, 2) | Yes |  |
+| FAMOUNT5 | NUMERIC(12, 2) | Yes |  |
+| FAMOUNT6 | NUMERIC(12, 2) | Yes |  |
+
+## FREETRANSLATE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WTRNID | INTEGER | No |  |
+| SDESCRIPTION | BLOB | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_170` (WTRNID)
+
+## GROUPS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WGROUPID | INTEGER | No |  |
+| WGROUPTYPEID | INTEGER | Yes |  |
+| SDESCRIPTION | VARCHAR(128) | Yes |  |
+| WPARENTGROUP2ID | INTEGER | Yes |  |
+| WPARENTGROUP1ID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WSORTNO | INTEGER | Yes |  |
+| BDISABLE | SMALLINT | Yes |  |
+| WCOLOR | INTEGER | Yes |  |
+| WTEXTCOLOR | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_57` (WGROUPID)
+
+## GROUPSSTATUS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WGROUPSTATUSID | INTEGER | No |  |
+| WGROUPTYPEID | INTEGER | Yes |  |
+| WGROUPID | INTEGER | Yes |  |
+| WLINKID | INTEGER | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_194` (WGROUPSTATUSID)
+
+## GROUPS_DESCRIPTIONS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WGROUPID | INTEGER | No |  |
+| WLANGUAGEID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(50) | No |  |
+| WGROUPDESCID | INTEGER | No |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_GROUP_DESCRIPTIONS_GR` (WGROUPID)
+- FOREIGN KEY: `FK_GROUP_LANGGROUP` (WLANGUAGEID)
+- PRIMARY KEY: `PK_GROUPS_DESCRIPTIONS_ID` (WGROUPDESCID)
+
+## IMP_LINK
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| IMP_LINKID | INTEGER | No |  |
+| IMP_SOURCEID | INTEGER | No |  |
+| IMP_EXTID | VARCHAR(60) | No |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| WSTOCKID | INTEGER | Yes |  |
+| WCONTACTID | INTEGER | Yes |  |
+| WEVENTID | INTEGER | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| WGROUPID | INTEGER | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_IMP_LINK_ACC` (WACCOUNTID)
+- FOREIGN KEY: `FK_IMP_LINK_DOC` (WDOCID)
+- FOREIGN KEY: `FK_IMP_LINK_GR` (WGROUPID)
+- FOREIGN KEY: `FK_IMP_LINK_SOURCE` (IMP_SOURCEID)
+- FOREIGN KEY: `FK_IMP_LINK_STO` (WSTOCKID)
+- FOREIGN KEY: `FK_IMP_LINK_TAX` (WTAXID)
+- PRIMARY KEY: `PK_IMP_LINK` (IMP_LINKID)
+
+## IMP_SOURCE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| IMP_SOURCEID | INTEGER | No |  |
+| IMP_NAME | VARCHAR(35) | No |  |
+| IMP_OSFINANCIALS_PHP_URL | VARCHAR(250) | Yes |  |
+| IMP_DEBTORURL | VARCHAR(250) | Yes |  |
+| IMP_CREDITORURL | VARCHAR(250) | Yes |  |
+| IMP_STOCKURL | VARCHAR(250) | Yes |  |
+| IMP_DOCUMENTURL | VARCHAR(250) | Yes |  |
+| IMP_EVENTURL | VARCHAR(250) | Yes |  |
+| IMP_CONTACTURL | VARCHAR(250) | Yes |  |
+| IMP_SOURCE_LOGICTYPE | INTEGER | Yes |  |
+| IMP_USERNAME | VARCHAR(50) | Yes |  |
+| IMP_PASSWORD | VARCHAR(50) | Yes |  |
+| IMP_PREFIX | VARCHAR(10) | Yes |  |
+| IMP_INIFILE | BLOB | Yes |  |
+| IMP_DFM | BLOB | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `PK_IMP_SOURCE` (IMP_SOURCEID)
+
+## IMP_STOCKACCOUNTS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| IMP_STOCKACCOUNTSID | INTEGER | No |  |
+| IMP_SOURCEID | INTEGER | No |  |
+| IMP_EXTID | VARCHAR(60) | No |  |
+| WSALESACCOUNTID | INTEGER | Yes |  |
+| WCOSTOFSALESACCOUNTID | INTEGER | Yes |  |
+| WSTOCKACCOUNTID | INTEGER | Yes |  |
+| WINPUTTAXACCOUNTID | INTEGER | Yes |  |
+| WOUTPUTTAXACCOUNTID | INTEGER | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_IMP_STOCKACCOUNTS_COSACC` (WCOSTOFSALESACCOUNTID)
+- FOREIGN KEY: `FK_IMP_STOCKACCOUNTS_INTAXACC` (WINPUTTAXACCOUNTID)
+- FOREIGN KEY: `FK_IMP_STOCKACCOUNTS_OUTTAXACC` (WOUTPUTTAXACCOUNTID)
+- FOREIGN KEY: `FK_IMP_STOCKACCOUNTS_SALEACC` (WSALESACCOUNTID)
+- FOREIGN KEY: `FK_IMP_STOCKACCOUNTS_STOCKACC` (WSTOCKACCOUNTID)
+- PRIMARY KEY: `PK_IMP_STOCKACCOUNTS` (IMP_STOCKACCOUNTSID)
+
+## IMP_TOTALS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| IMP_TOTALID | INTEGER | No |  |
+| IMP_SOURCEID | INTEGER | No |  |
+| IMP_EXTID | VARCHAR(60) | No |  |
+| WSTOCKID | INTEGER | No |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_IMP_TOTALS_SOURCE` (IMP_SOURCEID)
+- FOREIGN KEY: `FK_IMP_TOTALS_STOCK` (WSTOCKID)
+- PRIMARY KEY: `PK_IMP_TOTALID` (IMP_TOTALID)
+
+## ITEMOPTIONS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WITEMOPTIONID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(35) | Yes |  |
+| SEXTERNALID | VARCHAR(50) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_222` (WITEMOPTIONID)
+
+## ITEMOPTIONSVALUES
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WITEMOPTIONVALUEID | INTEGER | No |  |
+| WITEMOPTIONID | INTEGER | Yes |  |
+| SDESCRIPTION | VARCHAR(35) | Yes |  |
+| FEXTRAAMOUNT | NUMERIC(12, 8) | Yes |  |
+| SEXTERNALID | VARCHAR(50) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_ITEMOPTIONSVALUES` (WITEMOPTIONID)
+- PRIMARY KEY: `INTEG_224` (WITEMOPTIONVALUEID)
+
+## JOBPROJECT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WJOBPROJECTID | INTEGER | No |  |
+| SJOBPROJECTCODE | VARCHAR(10) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| DSTARTDATE | TIMESTAMP | Yes |  |
+| DENDDATE | TIMESTAMP | Yes |  |
+| WPARENTID | INTEGER | Yes |  |
+| WNOTEFILEID | INTEGER | Yes |  |
+| BENABLED | SMALLINT | Yes |  |
+| WSTATUSID | INTEGER | Yes |  |
+| WINBUDGETACCID | INTEGER | Yes |  |
+| WEXBUDGETACCID | INTEGER | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WINFOSID | INTEGER | Yes |  |
+| WGROUP1ID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WUSERID | INTEGER | Yes |  |
+| WGROUP2ID | INTEGER | Yes |  |
+| WPROFBUDGETID | INTEGER | Yes |  |
+| WDEFAULTACCOUNT | INTEGER | Yes |  |
+| FTOTALBUDGET | NUMERIC(12, 2) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_59` (WJOBPROJECTID)
+
+## KEYSCONT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WKEYVALUE | INTEGER | No |  |
+| SKEYNAME | VARCHAR(10) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_61` (WKEYVALUE)
+
+## LABSPECS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLABSPECSID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(30) | Yes |  |
+| FTOPMARGIN | NUMERIC(12, 2) | Yes |  |
+| FBOTTOMMARGIN | NUMERIC(12, 2) | Yes |  |
+| FLEFTMARGIN | NUMERIC(12, 2) | Yes |  |
+| FRIGHTMARGIN | NUMERIC(12, 2) | Yes |  |
+| BPORTRAIT | SMALLINT | Yes |  |
+| FHEIGHT | NUMERIC(12, 2) | Yes |  |
+| FWIDTH | NUMERIC(12, 2) | Yes |  |
+| WACCROSS | INTEGER | Yes |  |
+| WDOWN | INTEGER | Yes |  |
+| FHGAP | NUMERIC(12, 2) | Yes |  |
+| FVGAP | NUMERIC(12, 2) | Yes |  |
+| FUNPRINTABLETOP | NUMERIC(12, 2) | Yes |  |
+| FUNPRINTABLELEFT | NUMERIC(12, 2) | Yes |  |
+| FPAGEHEIGHT | NUMERIC(12, 2) | Yes |  |
+| FPAGEWIDTH | NUMERIC(12, 2) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WFONTSIZE | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_63` (WLABSPECSID)
+
+## LOCATIONS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLOCATIONID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| SLOCCODE | VARCHAR(8) | Yes |  |
+| WLOCATIONTYPEID | INTEGER | Yes |  |
+| WPARENTID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WSORTNO | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_65` (WLOCATIONID)
+
+## LOGENTRY
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLOGENTRYID | INTEGER | No |  |
+| WLOGID | INTEGER | Yes |  |
+| SLOGTYPE | VARCHAR(10) | Yes |  |
+| SLOGMESSAGE | VARCHAR(100) | Yes |  |
+| WLOGLINKID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_LOGENTRY_LOG` (WLOGID)
+- PRIMARY KEY: `PK_LOGENTRY` (WLOGENTRYID)
+
+## LOGGEDIN
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLOGID | INTEGER | No |  |
+| WCONNECTIONID | INTEGER | No |  |
+| WUSERID | INTEGER | Yes |  |
+| SPCNAME | VARCHAR(100) | Yes |  |
+| SUSERNAME | VARCHAR(100) | Yes |  |
+| DCONSTART | TIMESTAMP | Yes |  |
+| DCONEND | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `PK_LOGGEDIN` (WLOGID)
+
+## MANUFACD
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WMFCDOCID | INTEGER | No |  |
+| WLINEID | INTEGER | No |  |
+| WLINETYPEID | INTEGER | Yes |  |
+| SSTOCKCODE | VARCHAR(20) | Yes |  |
+| SDESCRIPTION | VARCHAR(40) | Yes |  |
+| WLOCATIONID | INTEGER | Yes |  |
+| FQTY | NUMERIC(12, 2) | Yes |  |
+| FVALUE | NUMERIC(12, 2) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_68` (WMFCDOCID, WLINEID)
+
+## MANUFACH
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WMFCDOCID | INTEGER | No |  |
+| WMFCTYPEID | INTEGER | Yes |  |
+| SMFCCODE | VARCHAR(20) | Yes |  |
+| WPARENTID | INTEGER | Yes |  |
+| SPICTURE | VARCHAR(20) | Yes |  |
+| BDISABLED | SMALLINT | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| WLOCATIONID | INTEGER | Yes |  |
+| WFINISHEDSTOCKID | INTEGER | Yes |  |
+| FPRICE1 | NUMERIC(12, 2) | Yes |  |
+| FPRICE2 | NUMERIC(12, 2) | Yes |  |
+| FPRICE3 | NUMERIC(12, 2) | Yes |  |
+| FUNUSED | NUMERIC(12, 2) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_70` (WMFCDOCID)
+
+## MESSAGES
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WMESSAGEID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| SEXTRADESCRIPTION | VARCHAR(255) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_72` (WMESSAGEID)
+
+## MULTIMEDIA
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WMMID | INTEGER | No |  |
+| STYPE | VARCHAR(5) | Yes |  |
+| SGROUP | VARCHAR(35) | Yes |  |
+| WREFID | BIGINT | Yes |  |
+| SDESCRIPTION | VARCHAR(50) | Yes |  |
+| SPATH | VARCHAR(500) | Yes |  |
+| SORGFILENAME | VARCHAR(100) | Yes |  |
+| DFILEDATE | TIMESTAMP | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WSUBREF | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `PK_MULTIMEDIA` (WMMID)
+
+## MULTIMEDIABLOB
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WMMID | INTEGER | No |  |
+| BDATA | BLOB | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `PK_MULTIMEDIABLOB` (WMMID)
+
+## OILINKS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WOILINKSID | INTEGER | No |  |
+| DDOCDATE | TIMESTAMP | Yes |  |
+| SREFERENCE | VARCHAR(64) | Yes |  |
+| SLINKEDREFERENCE | VARCHAR(15) | Yes |  |
+| WFULLAMOUNT | NUMERIC(12, 2) | Yes |  |
+| WOUTSTANDINGAMOUNT | NUMERIC(12, 2) | Yes |  |
+| WLINKEDAMOUNT | NUMERIC(12, 2) | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| UNUSED1 | INTEGER | Yes |  |
+| WAMOUNTTRANSACTIONID | INTEGER | Yes |  |
+| WLINKTRANSACTIONID | INTEGER | Yes |  |
+| WUSERID | INTEGER | Yes |  |
+| UNUSED2 | INTEGER | Yes |  |
+| WBATCHID | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_74` (WOILINKSID)
+
+## OILINKSPRE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WBATCHID | INTEGER | No |  |
+| WLINEID | INTEGER | No |  |
+| WBATCHTYPEID | INTEGER | No |  |
+| WTRANSACTIONID | INTEGER | No |  |
+| FAMOUNT | NUMERIC(12, 2) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_OILINKSPRE_BATCH` (WBATCHID)
+- FOREIGN KEY: `FK_OILINKSPRE_TRANSACT` (WTRANSACTIONID)
+- PRIMARY KEY: `INTEG_269` (WBATCHID, WLINEID, WTRANSACTIONID)
+
+## OPREPORT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WOPTIONID | INTEGER | No |  |
+| STROPTION | VARCHAR(25) | Yes |  |
+| SOPTIONVALUE | VARCHAR(64) | Yes |  |
+| WOPTIONTYPEID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_76` (WOPTIONID)
+
+## OSF_EDIT_FIELDS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WOSF_EDIT_FIELDS_ID | INTEGER | No |  |
+| SFORMNAME | VARCHAR(100) | No |  |
+| SCOLUMNORIGEN | VARCHAR(40) | No |  |
+| WCOLUMNTRANSLATION | INTEGER | No |  |
+| WCONTROLX | INTEGER | No |  |
+| WCONTROLY | INTEGER | No |  |
+| WCONTROLWIDTH | INTEGER | No |  |
+| WCONTROLHEIGTH | INTEGER | No |  |
+| SCONTROLTYPE | VARCHAR(2) | No |  |
+| WLENGTH | INTEGER | Yes |  |
+| LLOOKUPSQL | BLOB | Yes |  |
+| BACTIVE | SMALLINT | Yes |  |
+| SDEFAULTVALUE | VARCHAR(150) | Yes |  |
+| SCHECK | VARCHAR(400) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `PK_OSF_EDIT_FIELDS` (WOSF_EDIT_FIELDS_ID)
+
+## OSF_EDIT_FORM
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WOSF_EDIT_FORM_ID | INTEGER | No |  |
+| SFORMNAME | VARCHAR(50) | No |  |
+| SFORMDISPLAYNAME | VARCHAR(50) | No |  |
+| SMASTERTABLE | VARCHAR(50) | No |  |
+| STABLE | VARCHAR(50) | No |  |
+| SPRIMARYKEY | VARCHAR(50) | No |  |
+| SSUBKEY | VARCHAR(50) | Yes |  |
+| SNEXTIDSQL | VARCHAR(400) | No |  |
+| BMULTILINE | SMALLINT | No |  |
+| SSEARCHFORM | VARCHAR(100) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `PK_OSF_EDIT_FORM` (WOSF_EDIT_FORM_ID)
+
+## OSF_SEARCH_FIELDS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WOSF_SEARCH_FIELDS_ID | INTEGER | No |  |
+| SFORMNAME | VARCHAR(100) | No |  |
+| SCOLUMNORIGEN | VARCHAR(40) | No |  |
+| WCOLUMNTRANSLATION | INTEGER | No |  |
+| WCONTROLX | INTEGER | No |  |
+| WCONTROLY | INTEGER | No |  |
+| WCONTROLWIDTH | INTEGER | No |  |
+| WCONTROLHEIGTH | INTEGER | No |  |
+| SCONTROLTYPE | VARCHAR(2) | No |  |
+| WLENGTH | INTEGER | Yes |  |
+| SUSESTRINGLIKE | VARCHAR(1) | Yes |  |
+| LLOOKUPSQL | BLOB | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `PK_OSF_SEARCH_FIELDS` (WOSF_SEARCH_FIELDS_ID)
+
+## PAYCON
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WPAYROLLID | INTEGER | No |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SDESCRIPTION | VARCHAR(15) | Yes |  |
+| BACTIVE | SMALLINT | Yes |  |
+| BCURRENTYEAR | SMALLINT | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_78` (WPAYROLLID)
+
+## PAYMENTTYPES
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WPAYMENTTYPEID | INTEGER | No |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| SDDESCRIPTION | VARCHAR(35) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_PAYMENTTYPES_ACCOUNT` (WACCOUNTID)
+- PRIMARY KEY: `INTEG_220` (WPAYMENTTYPEID)
+
+## PAYTRANS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WPAYROLLID | INTEGER | No |  |
+| WEMPLOYEEID | INTEGER | Yes |  |
+| WSOURCEID | INTEGER | Yes |  |
+| WPERIODID | INTEGER | Yes |  |
+| FAMOUNT | NUMERIC(12, 2) | Yes |  |
+| FUNITS | NUMERIC(12, 2) | Yes |  |
+| WUSERID | INTEGER | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_80` (WPAYROLLID)
+
+## PERIODHIST
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WYEARID | INTEGER | No |  |
+| WPERIODID | INTEGER | No |  |
+| DSTARTDATE | TIMESTAMP | No |  |
+| DENDDATE | TIMESTAMP | No |  |
+| SDESCRIPTION | VARCHAR(12) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_243` (WPERIODID, WYEARID)
+
+## PERIODS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WYEARID | INTEGER | No |  |
+| WPERIODID | INTEGER | No |  |
+| DSTARTDATE | TIMESTAMP | No |  |
+| DENDDATE | TIMESTAMP | No |  |
+| SDESCRIPTION | VARCHAR(12) | Yes |  |
+| BSHUTDOWN | SMALLINT | Yes |  |
+| BCONTAINSTRANSACTIONS | SMALLINT | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_87` (WYEARID, WPERIODID)
+
+## POSTBATCH_0_0
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WLINEID | INTEGER | No |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| SACCOUNT | VARCHAR(8) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FDEBIT | NUMERIC(18, 8) | Yes |  |
+| FCREDIT | NUMERIC(18, 8) | Yes |  |
+| FAMOUNT | NUMERIC(18, 8) | Yes |  |
+| STAX | VARCHAR(8) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SCONTRAACCOUNT | VARCHAR(8) | Yes |  |
+| WCONTRAACCOUNTID | INTEGER | Yes |  |
+| FTAXAMOUNT | NUMERIC(18, 8) | Yes |  |
+| DALLOCATEDDATE | TIMESTAMP | Yes |  |
+| BRECONCILED | INTEGER | Yes |  |
+| BEXCLUSIVE | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| WTAX2ID | INTEGER | Yes |  |
+| NOTUSED | NUMERIC(18, 8) | Yes |  |
+| SPROFILE | VARCHAR(64) | Yes |  |
+| SJOBCODE | VARCHAR(8) | Yes |  |
+| STAX2 | VARCHAR(8) | Yes |  |
+| BLINKED | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FTAX2AMOUNT | NUMERIC(18, 8) | Yes |  |
+| WLINKEDID | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| DPAYMENTDATE | TIMESTAMP | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| FUNITQTY | NUMERIC(18, 8) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_301` (WLINEID)
+
+## PRICE_AGREEMENT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WPRICEID | INTEGER | No |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| WSTOCKID | INTEGER | Yes |  |
+| FPRICE1 | NUMERIC(12, 8) | Yes |  |
+| FUNTILQTY1 | NUMERIC(12, 8) | Yes |  |
+| FPRICE2 | NUMERIC(12, 8) | Yes |  |
+| FUNTILQTY2 | NUMERIC(12, 8) | Yes |  |
+| FPRICE3 | NUMERIC(12, 8) | Yes |  |
+| FUNTILQTY3 | NUMERIC(12, 8) | Yes |  |
+| FPRICE4 | NUMERIC(12, 8) | Yes |  |
+| SEXTSTOCKCODE | VARCHAR(100) | Yes |  |
+| DDATE | DATE | Yes |  |
+| WGROUPID | INTEGER | Yes |  |
+| FUNTILQTY4 | NUMERIC(12, 8) | Yes |  |
+| FPRICE5 | NUMERIC(12, 8) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `INTEG_217` (WACCOUNTID)
+- FOREIGN KEY: `INTEG_218` (WSTOCKID)
+- PRIMARY KEY: `INTEG_216` (WPRICEID)
+
+## PRINTERS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WPRINTERID | INTEGER | No |  |
+| SPRINTERNAME | VARCHAR(20) | Yes |  |
+| WLINESPERPAGE | INTEGER | Yes |  |
+| WLINESPERINCH | INTEGER | Yes |  |
+| WCHARSPERINCH | INTEGER | Yes |  |
+| WPAGELENGTH | INTEGER | Yes |  |
+| WPAGEWIDTH | INTEGER | Yes |  |
+| S6LINESPERINCH | VARCHAR(20) | Yes |  |
+| S8LINESPERINCH | VARCHAR(20) | Yes |  |
+| S10LINESPERINCH | VARCHAR(20) | Yes |  |
+| S5CHARSPERINCHON | VARCHAR(20) | Yes |  |
+| S5CHARSPERINCHOFF | VARCHAR(20) | Yes |  |
+| S10CHARSPERINCHON | VARCHAR(20) | Yes |  |
+| S12CHARSPERINCHON | VARCHAR(20) | Yes |  |
+| S16CHARSPERINCHON | VARCHAR(20) | Yes |  |
+| S16CHARSPERINCHOFF | VARCHAR(20) | Yes |  |
+| SBOLDFACEON | VARCHAR(20) | Yes |  |
+| SBOLDFACEOFF | VARCHAR(20) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_89` (WPRINTERID)
+
+## PROFILES
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WPROFILEID | INTEGER | No |  |
+| WPROFILETYPEID | INTEGER | Yes |  |
+| WPARENTID | INTEGER | Yes |  |
+| WSOURCEID | INTEGER | Yes |  |
+| WSOURCETYPEID | INTEGER | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| BACTIVE | SMALLINT | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WSORTNO | INTEGER | Yes |  |
+| WSTATUS | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_91` (WPROFILEID)
+
+## RECONBANK
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SACCOUNT | VARCHAR(7) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FAMOUNT | NUMERIC(12, 2) | Yes |  |
+| FTAXAMOUNT | NUMERIC(12, 2) | Yes |  |
+| BRECONCILED | SMALLINT | Yes |  |
+| FRECNO | NUMERIC(12, 2) | Yes |  |
+| FBATCHTYPE | NUMERIC(12, 2) | Yes |  |
+
+## REPCELLS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WREPORTID | INTEGER | No |  |
+| WCOLUMNID | INTEGER | No |  |
+| WROWID | INTEGER | No |  |
+| SVALUE | VARCHAR(30) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_95` (WREPORTID, WCOLUMNID, WROWID)
+
+## REPCOLS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WREPORTID | INTEGER | No |  |
+| WCOLUMNID | INTEGER | No |  |
+| SHEADING1 | VARCHAR(15) | Yes |  |
+| SHEADING2 | VARCHAR(15) | Yes |  |
+| WCOLUMNTYPEID | INTEGER | Yes |  |
+| WPERIODSTART | INTEGER | Yes |  |
+| WPERIODEND | INTEGER | Yes |  |
+| SFORMULA | VARCHAR(15) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_98` (WREPORTID, WCOLUMNID)
+
+## REPHEAD
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WREPORTID | INTEGER | No |  |
+| SREPORTNAME | VARCHAR(15) | Yes |  |
+| STITLE1 | VARCHAR(31) | Yes |  |
+| STITLE2 | VARCHAR(31) | Yes |  |
+| BDISPLAYDECIMAL | SMALLINT | Yes |  |
+| BCOMPRESSPRINT | SMALLINT | Yes |  |
+| WNOOFCOLUMNS | INTEGER | Yes |  |
+| WREPORTTYPEID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_100` (WREPORTID)
+
+## REPLINE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WREPORTID | INTEGER | No |  |
+| WROWID | INTEGER | No |  |
+| WROWTYPEID | INTEGER | Yes |  |
+| WROWITEMID | INTEGER | Yes |  |
+| SITEMNAME | VARCHAR(8) | Yes |  |
+| SROWDESCRIPTION | VARCHAR(64) | Yes |  |
+| BMAINACCOUNT | SMALLINT | Yes |  |
+| BSUPRESSPRINT | SMALLINT | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| SCOLUMN1 | VARCHAR(30) | Yes |  |
+| SCOLUMN2 | VARCHAR(30) | Yes |  |
+| SCOLUMN3 | VARCHAR(30) | Yes |  |
+| SCOLUMN4 | VARCHAR(30) | Yes |  |
+| SCOLUMN5 | VARCHAR(30) | Yes |  |
+| SCOLUMN6 | VARCHAR(30) | Yes |  |
+| SCOLUMN7 | VARCHAR(30) | Yes |  |
+| SCOLUMN8 | VARCHAR(30) | Yes |  |
+| SCOLUMN9 | VARCHAR(30) | Yes |  |
+| SCOLUMN10 | VARCHAR(30) | Yes |  |
+| SCOLUMN11 | VARCHAR(30) | Yes |  |
+| SCOLUMN12 | VARCHAR(30) | Yes |  |
+| SCOLUMN13 | VARCHAR(30) | Yes |  |
+| SCOLUMN14 | VARCHAR(30) | Yes |  |
+| SCOLUMN15 | VARCHAR(30) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_103` (WREPORTID, WROWID)
+
+## REPORTOP
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| SACCOUNTLISTINGSEQUENCE | VARCHAR(64) | Yes |  |
+| SACCOUNTLISTINGFROMACC | VARCHAR(8) | Yes |  |
+| SACCOUNTLISTINGTOACC | VARCHAR(8) | Yes |  |
+| BACCOUNTLISTINGSHOWSUB | SMALLINT | Yes |  |
+| WTRIALBALFROMDATEID | INTEGER | Yes |  |
+| WTRIALBALODATEID | INTEGER | Yes |  |
+| BTRIALBALDISPLAYSUBACC | SMALLINT | Yes |  |
+| BTRIALBALNILBALANCES | SMALLINT | Yes |  |
+| STRIALBALSSEQUENCE | VARCHAR(64) | Yes |  |
+| SBUDGETPERFSEQUENCE | VARCHAR(64) | Yes |  |
+| SBUDGETPERFFROMACC | VARCHAR(8) | Yes |  |
+| SBUDGETPERFTOACC | VARCHAR(8) | Yes |  |
+| BBUDGETPERFSHOWSUB | SMALLINT | Yes |  |
+| BBUDGETPERFNILBAL | SMALLINT | Yes |  |
+| WBATCHTYPETYPE | INTEGER | Yes |  |
+| SBATCHTYPEWHICHYEAR | VARCHAR(10) | Yes |  |
+| WBATCHTYPEFROMDATEID | INTEGER | Yes |  |
+| WBATCHTYPETODATEID | INTEGER | Yes |  |
+| BBATCHTYPESHOWPERIOD | SMALLINT | Yes |  |
+| BBATCHTYPESHOWBAL | SMALLINT | Yes |  |
+| SCREDITORLISTINGSEQUENCE | VARCHAR(64) | Yes |  |
+| SCREDLISTINGFROMACCOUNT | VARCHAR(8) | Yes |  |
+| SCREDLISTINGTOACCOUNT | VARCHAR(8) | Yes |  |
+| SCREDMOVEMENTSSEQUENCE | VARCHAR(64) | Yes |  |
+| SCREDMOVEMENTSFROMACCOUNT | VARCHAR(8) | Yes |  |
+| SCREDMOVEMENTSTOACCOUNT | VARCHAR(8) | Yes |  |
+| BCREDMOVEMENTSBNIBAL | SMALLINT | Yes |  |
+| SDEBTORLISTINGSEQUENCE | VARCHAR(64) | Yes |  |
+| SDEBTORLISTINGFROMACCOUNT | VARCHAR(8) | Yes |  |
+| SDEBTORLISTINGTOACCOUNT | VARCHAR(8) | Yes |  |
+| BDEBTORLISTINGSHOWDETAIL | SMALLINT | Yes |  |
+| SDEBTORMOVEMENTSEQUENCE | VARCHAR(64) | Yes |  |
+| SDEBTORMOVEMENTFROMACC | VARCHAR(8) | Yes |  |
+| SDEBTORMOVEMENTTOACC | VARCHAR(8) | Yes |  |
+| BDEBTORMOVEMENTBNILBAL | SMALLINT | Yes |  |
+| WDOCLISTTYPEID | INTEGER | Yes |  |
+| SDOCLISTSEQUENCE | VARCHAR(64) | Yes |  |
+| SDOCLISTFROMNUMBER | VARCHAR(8) | Yes |  |
+| SDOCLISTTONUMBER | VARCHAR(8) | Yes |  |
+| DDOCLISTFROMDATE | TIMESTAMP | Yes |  |
+| DDOCLISTTODATE | TIMESTAMP | Yes |  |
+| SDEBTORAGEFROM | VARCHAR(8) | Yes |  |
+| SDEBTORAGETO | VARCHAR(8) | Yes |  |
+| DDEBTORAGECURRENTDATE | TIMESTAMP | Yes |  |
+| DDEBTORAGEDATELIMIT1 | TIMESTAMP | Yes |  |
+| DDEBTORAGEDATELIMIT2 | TIMESTAMP | Yes |  |
+| DDEBTORAGEDATELIMIT3 | TIMESTAMP | Yes |  |
+| DDEBTORAGEDATELIMIT4 | TIMESTAMP | Yes |  |
+| SDEBTORAGERANGENAME0 | VARCHAR(15) | Yes |  |
+| SDEBTORAGERANGENAME1 | VARCHAR(15) | Yes |  |
+| SDEBTORAGERANGENAME2 | VARCHAR(15) | Yes |  |
+| SDEBTORAGERANGENAME3 | VARCHAR(15) | Yes |  |
+| FDEBTORAGEMINIMUMAMOUNT | NUMERIC(12, 2) | Yes |  |
+| WDEBTORAGEMONTH1 | INTEGER | Yes |  |
+| WDEBTORAGEMONTH2 | INTEGER | Yes |  |
+| WDEBTORAGEMONTH3 | INTEGER | Yes |  |
+| BDEBTORAGESORT | SMALLINT | Yes |  |
+| BDEBTORAGEACCOUNTDETAIL | SMALLINT | Yes |  |
+| BDEBTORAGESHOWTRANSAC | SMALLINT | Yes |  |
+| BDEBTORAGESHOWOPENITEM | SMALLINT | Yes |  |
+| BDEBTORAGEIGNOREZEROBAL | SMALLINT | Yes |  |
+| SCREDITORAGEFROM | VARCHAR(8) | Yes |  |
+| SCREDITORAGETO | VARCHAR(8) | Yes |  |
+| DCREDITORAGECURRENTDATE | TIMESTAMP | Yes |  |
+| DCREDITORAGEDATELIMIT1 | TIMESTAMP | Yes |  |
+| DCREDITORAGEDATELIMIT2 | TIMESTAMP | Yes |  |
+| DCREDITORAGEDATELIMIT3 | TIMESTAMP | Yes |  |
+| DCREDITORAGEDATELIMIT4 | TIMESTAMP | Yes |  |
+| SCREDITORAGERANGENAME0 | VARCHAR(15) | Yes |  |
+| SCREDITORAGERANGENAME1 | VARCHAR(15) | Yes |  |
+| SCREDITORAGERANGENAME2 | VARCHAR(15) | Yes |  |
+| SCREDITORAGERANGENAME3 | VARCHAR(15) | Yes |  |
+| FCREDITORAGEMINIMUMAMOUNT | NUMERIC(12, 2) | Yes |  |
+| WCREDITORAGEMONTH1 | INTEGER | Yes |  |
+| WCREDITORAGEMONTH2 | INTEGER | Yes |  |
+| WCREDITORAGEMONTH3 | INTEGER | Yes |  |
+| BCREDITORAGESORT | SMALLINT | Yes |  |
+| BCREDITORAGEACCOUNTDETAIL | SMALLINT | Yes |  |
+| BCREDITORAGESHOWTRANSAC | SMALLINT | Yes |  |
+| BCREDITORAGESHOWOPENITEM | SMALLINT | Yes |  |
+| BCREDITORAGEIGNOREZEROBAL | SMALLINT | Yes |  |
+| SRECONBANKACCOUNT | VARCHAR(64) | Yes |  |
+| DRECONUNTIL | TIMESTAMP | Yes |  |
+| FRECONBANKBALANCE | NUMERIC(12, 2) | Yes |  |
+| SRECONREPORTBANKACCOUNT | VARCHAR(64) | Yes |  |
+| DRECONREPORTUNTIL | TIMESTAMP | Yes |  |
+| FRECONREPORTBALANCE | NUMERIC(12, 2) | Yes |  |
+| BCREDTRANSINCNILBAL | SMALLINT | Yes |  |
+| SCREDTRANSSEQUENCE | VARCHAR(64) | Yes |  |
+| SCREDTRANSWHICHYEAR | VARCHAR(64) | Yes |  |
+| SCREDTRANSFROMACCOUNT | VARCHAR(8) | Yes |  |
+| SCREDTRANSTOACCOUNT | VARCHAR(8) | Yes |  |
+| WCREDTRANSFROMDATE | INTEGER | Yes |  |
+| WCREDTRANSTODATE | INTEGER | Yes |  |
+| BCREDTRANSEACHPERIOD | SMALLINT | Yes |  |
+| BCREDTRANSNEWPAGE | SMALLINT | Yes |  |
+| BDEBTRANSINCNILBAL | SMALLINT | Yes |  |
+| SDEBTRANSSEQUENCE | VARCHAR(64) | Yes |  |
+| SDEBTRANSWHICHYEAR | VARCHAR(64) | Yes |  |
+| SDEBTRANSFROMACCOUNT | VARCHAR(8) | Yes |  |
+| SDEBTRANSTOACCOUNT | VARCHAR(8) | Yes |  |
+| WDEBTRANSFROMDATE | INTEGER | Yes |  |
+| WDEBTRANSTODATE | INTEGER | Yes |  |
+| BDEBTRANSEACHPERIOD | SMALLINT | Yes |  |
+| BDEBTRANSNEWPAGE | SMALLINT | Yes |  |
+| SSTOCKACTIVITYFROMCODE | VARCHAR(15) | Yes |  |
+| SSTOCKACTIVITYTOCODE | VARCHAR(15) | Yes |  |
+| SSTOCKACTIVITYSEQUENCE | VARCHAR(64) | Yes |  |
+| SSTOCKLISTSEQUENCE | VARCHAR(64) | Yes |  |
+| SSTOCKLISTFROMCODE | VARCHAR(15) | Yes |  |
+| SSTOCKLISTTOCODE | VARCHAR(15) | Yes |  |
+| BSTOCKLISTQTYONHAND | SMALLINT | Yes |  |
+| BSTOCKLISTCOSTPRICE | SMALLINT | Yes |  |
+| BSTOCKLISTSELLINGPRICE | SMALLINT | Yes |  |
+| BSTOCKLISTSTOCKCOUNT | SMALLINT | Yes |  |
+| BSTOCKLISTSTOCKVALUE | SMALLINT | Yes |  |
+| SSTOCKMOVEMENTSEQUENCE | VARCHAR(64) | Yes |  |
+| SSTOCKMOVEMENTFROMCODE | VARCHAR(15) | Yes |  |
+| SSTOCKMOVEMENTTOCODE | VARCHAR(15) | Yes |  |
+| DSTOCKMOVEMENTFROMDATE | TIMESTAMP | Yes |  |
+| DSTOCKMOVEMENTTODATE | TIMESTAMP | Yes |  |
+| BSTOCKMOVEMENTSHOWDETAIL | SMALLINT | Yes |  |
+| BSTOCKMOVEMENTNEWPAGE | SMALLINT | Yes |  |
+| SSTOCKREORDERSEQUENCE | VARCHAR(64) | Yes |  |
+| SSTOCKREORDERFROMCODE | VARCHAR(15) | Yes |  |
+| SSTOCKREORDERTOCODE | VARCHAR(15) | Yes |  |
+| BGLLEDGERNILBALANCES | SMALLINT | Yes |  |
+| SGLLEDGERSEQUENCE | VARCHAR(64) | Yes |  |
+| SGLLEDGERWHICHYEAR | VARCHAR(64) | Yes |  |
+| SGLLEDGERFROMACCOUNT | VARCHAR(8) | Yes |  |
+| SGLLEDGERTOACCOUNT | VARCHAR(8) | Yes |  |
+| WGLLEDGERFROMDATE | INTEGER | Yes |  |
+| WGLLEDGERTODATE | INTEGER | Yes |  |
+| BGLLEDGEREACHPERIOD | SMALLINT | Yes |  |
+| BGLLEDGERNEWPAGE | SMALLINT | Yes |  |
+| SGLMOVEMENTSEQUENCE | VARCHAR(64) | Yes |  |
+| SGLMOVEMENTFROMACCOUNT | VARCHAR(8) | Yes |  |
+| SGLMOVEMENTTOACCOUNT | VARCHAR(8) | Yes |  |
+| BGLMOVEMENTBINCLNILBAL | SMALLINT | Yes |  |
+| SSALESBYCUSTSEQUENCE | VARCHAR(64) | Yes |  |
+| SSALESBYCUSTFROMCUST | VARCHAR(8) | Yes |  |
+| SSALESBYCUSTTOCUST | VARCHAR(8) | Yes |  |
+| DSALESBYCUSTFROMDATE | TIMESTAMP | Yes |  |
+| DSALESBYCUSTTODATE | TIMESTAMP | Yes |  |
+| SPURCHBYSUPPSEQUENCE | VARCHAR(64) | Yes |  |
+| SPURCHBYSUPPFROMSUPP | VARCHAR(8) | Yes |  |
+| SPURCHBYSUPPTOSUPP | VARCHAR(8) | Yes |  |
+| DPURCHBYSUPPFROMDATE | TIMESTAMP | Yes |  |
+| DPURCHBYSUPPTODATE | TIMESTAMP | Yes |  |
+| SSALESBYPRODSEQUENCE | VARCHAR(64) | Yes |  |
+| SSALESBYPRODFROMPROD | VARCHAR(15) | Yes |  |
+| SSALESBYPRODTOPROD | VARCHAR(15) | Yes |  |
+| DSALESBYPRODFROMDATE | TIMESTAMP | Yes |  |
+| DSALESBYPRODTODATE | TIMESTAMP | Yes |  |
+| SPURCHBYPRODSEQUENCE | VARCHAR(64) | Yes |  |
+| SPURCHBYPRODFROMPROD | VARCHAR(8) | Yes |  |
+| SPURCHBYPRODTOPROD | VARCHAR(8) | Yes |  |
+| DPURCHBYPRODFROMDATE | TIMESTAMP | Yes |  |
+| DPURCHBYPRODTODATE | TIMESTAMP | Yes |  |
+| SCUSTBYPRODSEQUENCE | VARCHAR(64) | Yes |  |
+| SCUSTBYPRODFROMPROD | VARCHAR(15) | Yes |  |
+| SCUSTBYPRODTOPROD | VARCHAR(15) | Yes |  |
+| DCUSTBYPRODFROMDATE | TIMESTAMP | Yes |  |
+| DCUSTBYPRODTODATE | TIMESTAMP | Yes |  |
+| SSALESPERSBYPRODSEQUENCE | VARCHAR(64) | Yes |  |
+| SSALESPERSBYPRODFROMPROD | VARCHAR(15) | Yes |  |
+| SSALESPERSBYPRODTOPROD | VARCHAR(15) | Yes |  |
+| DSALESPERSBYPRODFROMDATE | TIMESTAMP | Yes |  |
+| DSALESPERSBYPRODTODATE | TIMESTAMP | Yes |  |
+| SPRODBYCUSTSEQUENCE | VARCHAR(64) | Yes |  |
+| SPRODBYCUSTFROMPROD | VARCHAR(15) | Yes |  |
+| SPRODBYCUSTTOPROD | VARCHAR(15) | Yes |  |
+| DPRODBYCUSTFROMDATE | TIMESTAMP | Yes |  |
+| DPRODBYCUSTTODATE | TIMESTAMP | Yes |  |
+| SCUSTBYSPERSONSPERSON | VARCHAR(30) | Yes |  |
+| DCUSTBYSPERSONFROMDATE | TIMESTAMP | Yes |  |
+| DCUSTBYSPERSONTODATE | TIMESTAMP | Yes |  |
+| SSALESBYSPSALESPERSON | VARCHAR(30) | Yes |  |
+| DSALESBYSPFROMDATE | TIMESTAMP | Yes |  |
+| DSALESBYSPTODATE | TIMESTAMP | Yes |  |
+| SPRODBYSPSALESPERSON | VARCHAR(30) | Yes |  |
+| DPRODBYSPFROMDATE | TIMESTAMP | Yes |  |
+| DPRODBYSPTODATE | TIMESTAMP | Yes |  |
+| SSALESBYGROUPFROMGROUP | VARCHAR(15) | Yes |  |
+| SSALESBYGROUPTOGROUP | VARCHAR(15) | Yes |  |
+| DSALESBYGROUPFROMDATE | TIMESTAMP | Yes |  |
+| DSALESBYGROUPTODATE | TIMESTAMP | Yes |  |
+| SINVOICEDETAILWHICHYEAR | VARCHAR(64) | Yes |  |
+| WINVOICEDETAILFROMDATE | INTEGER | Yes |  |
+| WINVOICEDETAILTODATE | INTEGER | Yes |  |
+| SINVOICEDETAILSTAXACCOUNT | VARCHAR(64) | Yes |  |
+| BINVOICEDETAILSHOWDETAIL | SMALLINT | Yes |  |
+| SDEBTSTATEMENTFROMACC | VARCHAR(8) | Yes |  |
+| SDEBTSTATEMENTTOACC | VARCHAR(8) | Yes |  |
+| FDEBTSTATEMENTMINAMOUNT | NUMERIC(12, 2) | Yes |  |
+| DDEBTSTATEMENTCURRENTDATE | TIMESTAMP | Yes |  |
+| DDEBTSTATEMENTDATELIMIT1 | TIMESTAMP | Yes |  |
+| DDEBTSTATEMENTDATELIMIT2 | TIMESTAMP | Yes |  |
+| DDEBTSTATEMENTDATELIMIT3 | TIMESTAMP | Yes |  |
+| DDEBTSTATEMENTDATELIMIT4 | TIMESTAMP | Yes |  |
+| SDEBTSTATEMENTAGENAME0 | VARCHAR(15) | Yes |  |
+| SDEBTSTATEMENTAGENAME1 | VARCHAR(15) | Yes |  |
+| SDEBTSTATEMENTAGENAME2 | VARCHAR(15) | Yes |  |
+| SDEBTSTATEMENTAGENAME3 | VARCHAR(15) | Yes |  |
+| WDEBTSTATEMENTMONTH1 | INTEGER | Yes |  |
+| WDEBTSTATEMENTMONTH2 | INTEGER | Yes |  |
+| WDEBTSTATEMENTMONTH3 | INTEGER | Yes |  |
+| BDEBTSTATEMENTTAXSEPERATE | SMALLINT | Yes |  |
+| BDEBTSTATEMENTTAXTRANSACT | SMALLINT | Yes |  |
+| BDEBTSTATEMENTOPENITEM | SMALLINT | Yes |  |
+| WINCOMESTMNTFROMDATEID | INTEGER | Yes |  |
+| WINCOMESTMNTTODATEID | INTEGER | Yes |  |
+| BINCOMESTMNTDISPLAYSUBACC | SMALLINT | Yes |  |
+| BINCOMESTMNTNILBALANCES | SMALLINT | Yes |  |
+| SINCOMESTMNTSSEQUENCE | VARCHAR(64) | Yes |  |
+| SREMITTANCEFROMACC | VARCHAR(8) | Yes |  |
+| SREMITTANCETOACC | VARCHAR(8) | Yes |  |
+| FREMITTANCEMINAMOUNT | NUMERIC(12, 2) | Yes |  |
+| DREMITTANCEDATELIMIT1 | TIMESTAMP | Yes |  |
+| DREMITTANCEDATELIMIT2 | TIMESTAMP | Yes |  |
+| DREMITTANCEDATELIMIT3 | TIMESTAMP | Yes |  |
+| DREMITTANCEDATELIMIT4 | TIMESTAMP | Yes |  |
+| SREMITTANCEAGENAME0 | VARCHAR(15) | Yes |  |
+| SREMITTANCEAGENAME1 | VARCHAR(15) | Yes |  |
+| SREMITTANCEAGENAME2 | VARCHAR(15) | Yes |  |
+| SREMITTANCEAGENAME3 | VARCHAR(15) | Yes |  |
+| WREMITTANCEMONTH1 | INTEGER | Yes |  |
+| WREMITTANCEMONTH2 | INTEGER | Yes |  |
+| WREMITTANCEMONTH3 | INTEGER | Yes |  |
+| BREMITTANCETAXSEPERATE | SMALLINT | Yes |  |
+| BREMITTANCETAXTRANSACT | SMALLINT | Yes |  |
+| BREMITTANCEOPENITEM | SMALLINT | Yes |  |
+| WREMITTANCEFROMDATEID | INTEGER | Yes |  |
+| WREMITTANCETODATEID | INTEGER | Yes |  |
+| BREMITTANCEDISPLAYSUBACC | SMALLINT | Yes |  |
+| BREMITTANCENILBALANCES | SMALLINT | Yes |  |
+| SREMITTANCESSEQUENCE | VARCHAR(64) | Yes |  |
+| WBALSHEETFROMDATEID | INTEGER | Yes |  |
+| WBALSHEETTODATEID | INTEGER | Yes |  |
+| BBALSHEETDISPLAYSUBACCS | SMALLINT | Yes |  |
+| BBALSHEETNILBALANCES | SMALLINT | Yes |  |
+| SBALSHEETSSEQUENCE | VARCHAR(64) | Yes |  |
+| SSALESPERSBYCUSTSEQUENCE | VARCHAR(64) | Yes |  |
+| SSALESPERSBYCUSTFROMCUST | VARCHAR(8) | Yes |  |
+| SSALESPERSBYCUSTTOCUST | VARCHAR(8) | Yes |  |
+| DSALESPERSBYCUSTFROMDATE | TIMESTAMP | Yes |  |
+| DSALESPERSBYCUSTTODATE | TIMESTAMP | Yes |  |
+| WDATAENTRYDRCRFORMAT | INTEGER | Yes |  |
+| WDECIMAL | INTEGER | Yes |  |
+| SLABELFROMACC | VARCHAR(8) | Yes |  |
+| SLABELTOACC | VARCHAR(8) | Yes |  |
+| SLABELSSEQUENCE | VARCHAR(64) | Yes |  |
+| SLABELSFILE | VARCHAR(64) | Yes |  |
+
+## REPORT_TRANSPORT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| ID | INTEGER | No |  |
+| USERSESSIONID | INTEGER | Yes |  |
+| WFIELDTYPE | INTEGER | Yes |  |
+| FIELD1 | VARCHAR(255) | Yes |  |
+| FIELD2 | VARCHAR(255) | Yes |  |
+| FIELD3 | VARCHAR(255) | Yes |  |
+| FIELD4 | VARCHAR(255) | Yes |  |
+| FIELD5 | VARCHAR(255) | Yes |  |
+| FIELD6 | VARCHAR(255) | Yes |  |
+| FIELD7 | VARCHAR(255) | Yes |  |
+| FIELD8 | VARCHAR(255) | Yes |  |
+| FIELD9 | VARCHAR(255) | Yes |  |
+| FIELD10 | VARCHAR(255) | Yes |  |
+| FIELD11 | VARCHAR(255) | Yes |  |
+| FIELD12 | VARCHAR(255) | Yes |  |
+| FIELD13 | VARCHAR(255) | Yes |  |
+| FIELD14 | VARCHAR(255) | Yes |  |
+| FIELD15 | VARCHAR(255) | Yes |  |
+| FIELD16 | VARCHAR(255) | Yes |  |
+| FIELD17 | VARCHAR(255) | Yes |  |
+| FIELD18 | VARCHAR(255) | Yes |  |
+| FIELD19 | VARCHAR(255) | Yes |  |
+| FIELD20 | VARCHAR(255) | Yes |  |
+| FIELD21 | VARCHAR(255) | Yes |  |
+| FIELD22 | VARCHAR(255) | Yes |  |
+| FIELD23 | VARCHAR(255) | Yes |  |
+| FIELD24 | VARCHAR(255) | Yes |  |
+| FIELD25 | VARCHAR(255) | Yes |  |
+| FIELD26 | VARCHAR(255) | Yes |  |
+| FIELD27 | VARCHAR(255) | Yes |  |
+| FIELD28 | VARCHAR(255) | Yes |  |
+| FIELD29 | VARCHAR(255) | Yes |  |
+| FIELD30 | VARCHAR(255) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_297` (ID)
+
+## REPTBAT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WTRANSACTIONID | INTEGER | No |  |
+| WUSERID | INTEGER | Yes |  |
+| WBATCHTYPEID | INTEGER | Yes |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| WTAXID | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| WCONTRAID | INTEGER | Yes |  |
+| FAMOUNT | NUMERIC(12, 2) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_105` (WTRANSACTIONID)
+
+## REPTDOCS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WDOCID | INTEGER | No |  |
+| WGROUPID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_107` (WDOCID)
+
+## RESOURCES
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| RESOURCEID | INTEGER | No |  |
+| DESCRIPTION | VARCHAR(255) | Yes |  |
+| NOTES | VARCHAR(255) | Yes |  |
+| IMAGEINDEX | INTEGER | Yes |  |
+| RESOURCEACTIVE | SMALLINT | Yes |  |
+| USERFIELD0 | VARCHAR(100) | Yes |  |
+| USERFIELD1 | VARCHAR(100) | Yes |  |
+| USERFIELD2 | VARCHAR(100) | Yes |  |
+| USERFIELD3 | VARCHAR(100) | Yes |  |
+| USERFIELD4 | VARCHAR(100) | Yes |  |
+| USERFIELD5 | VARCHAR(100) | Yes |  |
+| USERFIELD6 | VARCHAR(100) | Yes |  |
+| USERFIELD7 | VARCHAR(100) | Yes |  |
+| USERFIELD8 | VARCHAR(100) | Yes |  |
+| USERFIELD9 | VARCHAR(100) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_109` (RESOURCEID)
+
+## STOCK
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSTOCKID | INTEGER | No |  |
+| SSTOCKCODE | VARCHAR(15) | Yes |  |
+| SBARCODENUMBER | VARCHAR(25) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| WCOSTACCOUNTID | INTEGER | Yes |  |
+| WINPUTTAXID | INTEGER | Yes |  |
+| WOUTPUTTAXID | INTEGER | Yes |  |
+| FOPENINGAVECOST | NUMERIC(18, 8) | Yes |  |
+| FQTYONHAND | NUMERIC(18, 8) | Yes |  |
+| FOPENINGQTY | NUMERIC(18, 8) | Yes |  |
+| FINVQTYONHAND | NUMERIC(18, 8) | Yes |  |
+| FREORDERQTY | NUMERIC(18, 8) | Yes |  |
+| WSALESACCOUNTID | INTEGER | Yes |  |
+| BAPPLYINVOICEDISCOUNT | SMALLINT | Yes |  |
+| WSTOCKACCOUNTID | INTEGER | Yes |  |
+| FSELLINGPRICE1 | NUMERIC(18, 8) | Yes |  |
+| FSELLINGPRICE2 | NUMERIC(18, 8) | Yes |  |
+| FSELLINGPRICE3 | NUMERIC(18, 8) | Yes |  |
+| FUNITAVECOST | NUMERIC(18, 8) | Yes |  |
+| FUNITCOST | NUMERIC(18, 8) | Yes |  |
+| WUNITID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| BAPPLYTAX | SMALLINT | Yes |  |
+| WINPUTTAX2ID | INTEGER | Yes |  |
+| BTAXABLE | SMALLINT | Yes |  |
+| WSUPPLIER1ID | INTEGER | Yes |  |
+| WSUPPLIER2ID | INTEGER | Yes |  |
+| WSTOCKTYPEID | INTEGER | Yes |  |
+| WOUTPUTTAX2ID | INTEGER | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| BDISABLED | SMALLINT | Yes |  |
+| WPERENTID | INTEGER | Yes |  |
+| WLOCATIONID | INTEGER | Yes |  |
+| WFILENAMEID | INTEGER | Yes |  |
+| SEXTRADESC | VARCHAR(255) | Yes |  |
+| SEXTERNALID | VARCHAR(200) | Yes |  |
+| FNETTOWEIGHT | NUMERIC(16, 8) | Yes |  |
+| FGROSSWEIGHT | NUMERIC(16, 8) | Yes |  |
+| FREORDERQTYTRIG | NUMERIC(12, 8) | Yes |  |
+| SMANUFACTURER | VARCHAR(35) | Yes |  |
+| FMINIMUMQTY | NUMERIC(12, 8) | Yes |  |
+| WLOCBATSERTYPEID | INTEGER | Yes |  |
+| SSTOCKCODESUP1 | VARCHAR(30) | Yes |  |
+| SSTOCKCODESUP2 | VARCHAR(30) | Yes |  |
+| WDEFAULTCOSTGROUP1ID | INTEGER | Yes |  |
+| WDELIVERDAYS | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_111` (WSTOCKID)
+- UNIQUE: `INTEG_112` (SSTOCKCODE)
+
+## STOCKOPTIONS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSTOCKOPTIONSID | INTEGER | No |  |
+| WSTOCKID | INTEGER | Yes |  |
+| WITEMOPTIONVALUE1ID | INTEGER | Yes |  |
+| WITEMOPTIONVALUE2ID | INTEGER | Yes |  |
+| WITEMOPTIONVALUE3ID | INTEGER | Yes |  |
+| WITEMOPTIONVALUE4ID | INTEGER | Yes |  |
+| WITEMOPTIONVALUE5ID | INTEGER | Yes |  |
+| FEXTRAPRICE | NUMERIC(12, 8) | Yes |  |
+| FQTYONHAND | NUMERIC(12, 8) | Yes |  |
+| SBARCODE | VARCHAR(25) | Yes |  |
+| SREFERENCE | VARCHAR(20) | Yes |  |
+| FUNITCOST | NUMERIC(12, 8) | Yes |  |
+| FREORDERQTY | NUMERIC(12, 8) | Yes |  |
+| FREORDERQTYTRIG | NUMERIC(12, 8) | Yes |  |
+| FUNITAVECOST | NUMERIC(12, 8) | Yes |  |
+| FEXTRAPRICE2 | NUMERIC(12, 8) | Yes |  |
+| FEXTRAPRICE3 | NUMERIC(12, 8) | Yes |  |
+| BENABLED | SMALLINT | Yes |  |
+| WBOXSIZE | INTEGER | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_STOCKOPTIONS_ITEM1` (WITEMOPTIONVALUE1ID)
+- FOREIGN KEY: `FK_STOCKOPTIONS_ITEM2` (WITEMOPTIONVALUE2ID)
+- FOREIGN KEY: `FK_STOCKOPTIONS_ITEM3` (WITEMOPTIONVALUE3ID)
+- FOREIGN KEY: `FK_STOCKOPTIONS_ITEM4` (WITEMOPTIONVALUE4ID)
+- FOREIGN KEY: `FK_STOCKOPTIONS_ITEM5` (WITEMOPTIONVALUE5ID)
+- FOREIGN KEY: `FK_STOCKOPTIONS_STOCK` (WSTOCKID)
+- PRIMARY KEY: `INTEG_227` (WSTOCKOPTIONSID)
+
+## STOCKPUB
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSTOCKID | INTEGER | No |  |
+| WPRICEID | INTEGER | Yes |  |
+| BLOBPICTURE | BLOB | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_114` (WSTOCKID)
+
+## STOCKSETOPTIONS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSTOCKID | INTEGER | No |  |
+| WITEMOPTION1ID | INTEGER | Yes |  |
+| WITEMOPTION2ID | INTEGER | Yes |  |
+| WITEMOPTION3ID | INTEGER | Yes |  |
+| WITEMOPTION4ID | INTEGER | Yes |  |
+| WITEMOPTION5ID | INTEGER | Yes |  |
+| WLEVEL | INTEGER | Yes |  |
+| WLOOKUPTYPE | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_225` (WSTOCKID)
+
+## STOCKTAXCLASS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSTOCKCLASSTAXID | INTEGER | No |  |
+| SNAME | VARCHAR(30) | Yes |  |
+| WINPUTTAX | INTEGER | Yes |  |
+| WOUTPUTTAX | INTEGER | Yes |  |
+| WSALESACCOUNTID | INTEGER | Yes |  |
+| WSTOCKACCOUNTID | INTEGER | Yes |  |
+| WCOSTACCOUNTID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_264` (WSTOCKCLASSTAXID)
+
+## STOCKTRN
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSTOCKTRANSACTIONID | INTEGER | No |  |
+| WSTOCKID | INTEGER | No |  |
+| DDATE | TIMESTAMP | Yes |  |
+| WSALESMANID | INTEGER | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| WDOCTYPEID | INTEGER | Yes |  |
+| FQTY | NUMERIC(18, 8) | Yes |  |
+| FCOSTPRICE | NUMERIC(18, 8) | Yes |  |
+| FSELLINGPRICE | NUMERIC(18, 8) | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WLINEID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_117` (WSTOCKTRANSACTIONID)
+
+## STOCK_DESCRIPTIONS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSTOCKID | INTEGER | No |  |
+| WLANGUAGEID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(60) | No |  |
+| SEXTRADESCRIPTION | BLOB | Yes |  |
+| WSTOCKDESCID | INTEGER | No |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_STOCK_DESCRIPTIONS_STK` (WSTOCKID)
+- FOREIGN KEY: `FK_STOCK_LANGGROUP` (WLANGUAGEID)
+- PRIMARY KEY: `PK_STOCK_DESCRIPTIONS_ID` (WSTOCKDESCID)
+
+## STOCK_LINKEDSALE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSTOCKLINKSALEID | INTEGER | No |  |
+| WSTOCKID | INTEGER | No |  |
+| WLINKSTOCKID | INTEGER | No |  |
+| WGROUPID | INTEGER | No |  |
+| WGROUPITEMID | INTEGER | No |  |
+| FEXTRAPRICE | NUMERIC(12, 8) | Yes |  |
+| WPRICETYPE | SMALLINT | Yes |  |
+| WSORTID | INTEGER | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_STOCK_LINKEDSALE_GROUP` (WGROUPID)
+- FOREIGN KEY: `FK_STOCK_LINKEDSALE_ITEMGROUP` (WGROUPITEMID)
+- FOREIGN KEY: `FK_STOCK_LINKEDSALE_STOCK` (WSTOCKID)
+- FOREIGN KEY: `FK_STOCK_LINKEDSALE_STOCKLINK` (WLINKSTOCKID)
+- PRIMARY KEY: `PK_STOCK_LINKEDSALEID` (WSTOCKLINKSALEID)
+
+## STOCK_MULTIGROUP
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSTOCKID | INTEGER | No |  |
+| WGROUPID | INTEGER | No |  |
+| IMP_SOURCEID | INTEGER | No |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_STOCK_MULTIGROUP_GR` (WGROUPID)
+- FOREIGN KEY: `FK_STOCK_MULTIGROUP_ST` (WSTOCKID)
+- PRIMARY KEY: `PK_STOCKMGR` (WSTOCKID, WGROUPID, IMP_SOURCEID)
+
+## SYSPARAMS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WPARAMID | INTEGER | No |  |
+| WUSERID | INTEGER | No |  |
+| SPARAMNAME | VARCHAR(25) | No |  |
+| SPARAMVALUE | VARCHAR(50) | Yes |  |
+| WTYPEID | INTEGER | Yes |  |
+| WSOURCEID | INTEGER | Yes |  |
+| WSOURCETYPEID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WPARENTID | INTEGER | Yes |  |
+| WPARENTTYPEID | INTEGER | Yes |  |
+| BACTIVE | SMALLINT | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_121` (WPARAMID)
+
+## SYSVARS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSYSVARSID | INTEGER | No |  |
+| SCOMPANYNAME | VARCHAR(64) | Yes |  |
+| SCOMPANYREGNO | VARCHAR(30) | Yes |  |
+| WEMAILSERVERADDRESS | VARCHAR(30) | Yes |  |
+| WFAXSERVERID | INTEGER | Yes |  |
+| BLOBLOGO | BLOB | Yes |  |
+| SADDRESS1 | VARCHAR(30) | Yes |  |
+| SADDRESS2 | VARCHAR(30) | Yes |  |
+| SADDRESS3 | VARCHAR(30) | Yes |  |
+| SPOSTCODE | VARCHAR(8) | Yes |  |
+| SPHONENUMBER | VARCHAR(30) | Yes |  |
+| SFAXNUMBER | VARCHAR(30) | Yes |  |
+| WRETAINEDINCOMEID | INTEGER | Yes |  |
+| WDEBTORSCONTROLID | INTEGER | Yes |  |
+| WCREDITORSCONTROLID | INTEGER | Yes |  |
+| SBACKUPPATH | VARCHAR(255) | Yes |  |
+| WCOSTOFSALESTYPEID | INTEGER | Yes |  |
+| WCREDITNOTEBATCHTYPEID | INTEGER | Yes |  |
+| SCREDITNOTEMESSAGE1 | VARCHAR(30) | Yes |  |
+| SCREDITNOTEMESSAGE2 | VARCHAR(30) | Yes |  |
+| SCREDITNOTEMESSAGE3 | VARCHAR(30) | Yes |  |
+| WPURCHASESBATCHID | INTEGER | Yes |  |
+| SPURCHASESMESSAGE1 | VARCHAR(30) | Yes |  |
+| SPURCHASESMESSAGE2 | VARCHAR(30) | Yes |  |
+| SPURCHASESMESSAGE3 | VARCHAR(30) | Yes |  |
+| WGOODSRETURNEDBATCHID | INTEGER | Yes |  |
+| SGOODSRETURNEDMESSAGE1 | VARCHAR(30) | Yes |  |
+| SGOODSRETURNEDMESSAGE2 | VARCHAR(30) | Yes |  |
+| SGOODSRETURNEDMESSAGE3 | VARCHAR(30) | Yes |  |
+| WINVOICESBATCHID | INTEGER | Yes |  |
+| SINVOICESMESSAGE1 | VARCHAR(30) | Yes |  |
+| SINVOICESMESSAGE2 | VARCHAR(30) | Yes |  |
+| SINVOICESMESSAGE3 | VARCHAR(30) | Yes |  |
+| WDISPLAYAMOUNT | INTEGER | Yes |  |
+| BACCOUNTSOPEN | SMALLINT | Yes |  |
+| BBATCHTYPES | SMALLINT | Yes |  |
+| BGROUPS | SMALLINT | Yes |  |
+| BNOTCLOSED | SMALLINT | Yes |  |
+| BPERIODCHANGE | SMALLINT | Yes |  |
+| BSALESMANEXIST | SMALLINT | Yes |  |
+| BUNITSEXIST | SMALLINT | Yes |  |
+| FLASTYEARPL | NUMERIC(12, 2) | Yes |  |
+| WNOOFPERIODS | INTEGER | Yes |  |
+| WINVOICEPAPERID | INTEGER | Yes |  |
+| WCREDITNOTEPAPERID | INTEGER | Yes |  |
+| WPURCHASEPAPERID | INTEGER | Yes |  |
+| WGOODSRETURNEDPAPERID | INTEGER | Yes |  |
+| WQUOTEPAPERID | INTEGER | Yes |  |
+| WORDERPAPERID | INTEGER | Yes |  |
+| WSTATEMENTPAPERID | INTEGER | Yes |  |
+| WREMITTANCEPAPERID | INTEGER | Yes |  |
+| FRECONCILEDBANKBALANCE | NUMERIC(12, 2) | Yes |  |
+| WRECONCILEDBANKID | INTEGER | Yes |  |
+| DRECONCILEDLASTDATE | TIMESTAMP | Yes |  |
+| SSTATEMENTMESSAGE1 | VARCHAR(30) | Yes |  |
+| SSTATEMENTMESSAGE2 | VARCHAR(30) | Yes |  |
+| SSTATEMENTMESSAGE3 | VARCHAR(30) | Yes |  |
+| BCREATEBALANCELINK | SMALLINT | Yes |  |
+| WTAXDUEACCOUNTID | INTEGER | Yes |  |
+| BTAXINVOICEBASED | SMALLINT | Yes |  |
+| BCREATECOSTOFSALES | SMALLINT | Yes |  |
+| WCURRENTUSERID | INTEGER | Yes |  |
+| SINVOICEHEADING | VARCHAR(20) | Yes |  |
+| SCREDITNOTEHEADING | VARCHAR(20) | Yes |  |
+| SPURCHASEHEADING | VARCHAR(20) | Yes |  |
+| SGOODSRETURNEDHEADING | VARCHAR(20) | Yes |  |
+| SQUOTEHEADING | VARCHAR(20) | Yes |  |
+| SQUOTEMESSAGE1 | VARCHAR(30) | Yes |  |
+| SQUOTEMESSAGE2 | VARCHAR(30) | Yes |  |
+| SQUOTEMESSAGE3 | VARCHAR(30) | Yes |  |
+| SORDERHEADING | VARCHAR(20) | Yes |  |
+| SORDERMESSAGE1 | VARCHAR(30) | Yes |  |
+| SORDERMESSAGE2 | VARCHAR(30) | Yes |  |
+| SORDERMESSAGE3 | VARCHAR(30) | Yes |  |
+| BPOSTTOLASTYEAR | SMALLINT | Yes |  |
+| WBASECURRENCYID | INTEGER | Yes |  |
+| BMULTICURRENCY | SMALLINT | Yes |  |
+| STAXREGNO | VARCHAR(30) | Yes |  |
+| BPAYMENTSBASED | SMALLINT | Yes |  |
+| WDUEACCOUNTID | INTEGER | Yes |  |
+| WLANGUAGEID | INTEGER | Yes |  |
+| BONLINE | SMALLINT | Yes |  |
+| BREMOTE | SMALLINT | Yes |  |
+| WCOLOURID | INTEGER | Yes |  |
+| SACCOUNTREPORTNAME1 | VARCHAR(15) | Yes |  |
+| SACCOUNTREPORTNAME2 | VARCHAR(15) | Yes |  |
+| SDEBTORREPORTNAME1 | VARCHAR(15) | Yes |  |
+| SDEBTORREPORTNAME2 | VARCHAR(15) | Yes |  |
+| SCREDITORREPORTNAME1 | VARCHAR(15) | Yes |  |
+| SCREDITORREPORTNAME2 | VARCHAR(15) | Yes |  |
+| SSTOCKREPORTNAME1 | VARCHAR(15) | Yes |  |
+| SSTOCKREPORTNAME2 | VARCHAR(15) | Yes |  |
+| SDOCUMENTREPORTNAME1 | VARCHAR(15) | Yes |  |
+| SDOCUMENTREPORTNAME2 | VARCHAR(15) | Yes |  |
+| SSELLINGPRICENAME1 | VARCHAR(15) | Yes |  |
+| SSELLINGPRICENAME2 | VARCHAR(15) | Yes |  |
+| SSELLINGPRICENAME3 | VARCHAR(15) | Yes |  |
+| WVERSION | INTEGER | Yes |  |
+| SREPORTFONTSNAME | VARCHAR(64) | Yes |  |
+| BUSEAVGCOST | SMALLINT | Yes |  |
+| BPRNSTATEMENTLOGO | SMALLINT | Yes |  |
+| DTLASTUSETIME | TIMESTAMP | Yes |  |
+| BSHOWTIPS | SMALLINT | Yes |  |
+| WAUTOSAVETIME | INTEGER | Yes |  |
+| BSHOWREMINDER | SMALLINT | Yes |  |
+| BSERVICEPREPRINTED | SMALLINT | Yes |  |
+| WDEFAULTOUTPUTID | INTEGER | Yes |  |
+| WDEFAULTZOOM | INTEGER | Yes |  |
+| BUSEOUTLOOKEXP | SMALLINT | Yes |  |
+| SEMAILADDRESS | VARCHAR(60) | Yes |  |
+| SBANKSWIFT1 | VARCHAR(64) | Yes |  |
+| SBANKIBAN1 | VARCHAR(64) | Yes |  |
+| SBANKSWIFT2 | VARCHAR(64) | Yes |  |
+| SBANKIBAN2 | VARCHAR(64) | Yes |  |
+| SBANKNAME1 | VARCHAR(64) | Yes |  |
+| SBANKNAME2 | VARCHAR(64) | Yes |  |
+| SBANKNUMBER1 | VARCHAR(64) | Yes |  |
+| SBANKNUMBER2 | VARCHAR(64) | Yes |  |
+| SBANKACCOUNTNAME1 | VARCHAR(64) | Yes |  |
+| SBANKACCOUNTNAME2 | VARCHAR(64) | Yes |  |
+| SBANKBIC1 | VARCHAR(64) | Yes |  |
+| SBANKBIC2 | VARCHAR(64) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `PK_SYSVARS` (WSYSVARSID)
+
+## SYSVARSEXT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WSYSVARSEXT_ID | INTEGER | No |  |
+| WSYSVARSID | INTEGER | No |  |
+| SCONTACTNAME | VARCHAR(50) | Yes |  |
+| SMOBILE | VARCHAR(50) | Yes |  |
+| SWEBSITE | VARCHAR(250) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_SYSVARSEXT_REF` (WSYSVARSID)
+- PRIMARY KEY: `PK_SYSVARSEXT` (WSYSVARSEXT_ID)
+
+## TASKACTION
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| TASKACTIONID | INTEGER | No |  |
+| EVENTID | INTEGER | No |  |
+| INVOICEID | INTEGER | Yes |  |
+| ACCOUNTID | INTEGER | Yes |  |
+| WGROUPID | INTEGER | Yes |  |
+| WTYPEID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_125` (TASKACTIONID)
+
+## TASKS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| RECORDID | INTEGER | No |  |
+| RESOURCEID | INTEGER | No |  |
+| COMPLETE | SMALLINT | Yes |  |
+| DESCRIPTION | VARCHAR(100) | Yes |  |
+| DETAILS | BLOB | Yes |  |
+| CREATEDON | TIMESTAMP | Yes |  |
+| COMPLETEDON | TIMESTAMP | Yes |  |
+| PRIORITY | INTEGER | Yes |  |
+| CATEGORY | INTEGER | Yes |  |
+| DUEDATE | TIMESTAMP | Yes |  |
+| USERFIELD0 | VARCHAR(100) | Yes |  |
+| USERFIELD1 | VARCHAR(100) | Yes |  |
+| USERFIELD2 | VARCHAR(100) | Yes |  |
+| USERFIELD3 | VARCHAR(100) | Yes |  |
+| USERFIELD4 | VARCHAR(100) | Yes |  |
+| USERFIELD5 | VARCHAR(100) | Yes |  |
+| USERFIELD6 | VARCHAR(100) | Yes |  |
+| USERFIELD7 | VARCHAR(100) | Yes |  |
+| USERFIELD8 | VARCHAR(100) | Yes |  |
+| USERFIELD9 | VARCHAR(100) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_128` (RECORDID)
+
+## TAX
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WACCOUNTID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(30) | Yes |  |
+| DSTARTDATE | TIMESTAMP | Yes |  |
+| DENDDATE | TIMESTAMP | Yes |  |
+| FRATE | NUMERIC(12, 2) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WLINKTAXID | INTEGER | Yes |  |
+| BLINKCONTRA | SMALLINT | Yes |  |
+| SHOWTYPE | INTEGER | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_TAX_ACCOUNT_ID` (WACCOUNTID)
+- PRIMARY KEY: `INTEG_130` (WACCOUNTID)
+
+## TEMP1
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| SMAINACCOUNTCODE | VARCHAR(4) | No |  |
+| SSUBACCOUNTCODE | VARCHAR(3) | No |  |
+| WDOCTYPEID | INTEGER | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| WSTOCKTRANSACTIONID | INTEGER | Yes |  |
+| WGROUPID | INTEGER | Yes |  |
+| SDOCNO | VARCHAR(15) | Yes |  |
+| DDATE | TIMESTAMP | Yes |  |
+| WSALESPERSONID | INTEGER | Yes |  |
+| SSTOCKCODE | VARCHAR(64) | Yes |  |
+| FSELLINGPRICE | NUMERIC(12, 2) | Yes |  |
+| FCOSTPRICE | NUMERIC(12, 2) | Yes |  |
+| FQTY | NUMERIC(12, 2) | Yes |  |
+
+## TMPAGEAN
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WACCOUNTID | INTEGER | No |  |
+| WACCOUNTTYPEID | INTEGER | Yes |  |
+| SACCOUNTCODE | VARCHAR(8) | Yes |  |
+| SDESCRIPTION | VARCHAR(64) | Yes |  |
+| FCURRENT | NUMERIC(12, 2) | Yes |  |
+| F30DAYS | NUMERIC(12, 2) | Yes |  |
+| F60DAYS | NUMERIC(12, 2) | Yes |  |
+| F90DAYS | NUMERIC(12, 2) | Yes |  |
+| FBBF | NUMERIC(12, 2) | Yes |  |
+| FTOTAL | NUMERIC(12, 2) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_134` (WACCOUNTID)
+
+## TOTALS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WACCOUNTID | INTEGER | No |  |
+| WPERIODID | INTEGER | No |  |
+| WYEARID | INTEGER | No |  |
+| BACTUAL | SMALLINT | No |  |
+| FAMOUNT | NUMERIC(12, 2) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_TOTALS_ACCOUNT` (WACCOUNTID)
+- PRIMARY KEY: `INTEG_139` (WACCOUNTID, WPERIODID, BACTUAL)
+
+## TRANSACT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WTRANSACTIONID | INTEGER | No |  |
+| WBATCHID | INTEGER | No |  |
+| WBATCHTYPEID | INTEGER | No |  |
+| WLINEID | INTEGER | No |  |
+| BCARRIEDFORWARD | SMALLINT | Yes |  |
+| BLASTYEAR | SMALLINT | Yes |  |
+| BLINKSUSED | SMALLINT | Yes |  |
+| BMULTIPLEITEMS | SMALLINT | Yes |  |
+| WACCOUNTID | INTEGER | No |  |
+| DDATE | TIMESTAMP | Yes |  |
+| WPERIODID | INTEGER | No |  |
+| WYEARID | INTEGER | No |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| FTAXRATE | NUMERIC(12, 2) | Yes |  |
+| WTAXACCOUNTID | INTEGER | Yes |  |
+| FAMOUNT | NUMERIC(12, 2) | No |  |
+| FTAXAMOUNT | NUMERIC(12, 2) | Yes |  |
+| FOUTSTANDINGAMOUNT | NUMERIC(12, 2) | Yes |  |
+| BRECONCILED | SMALLINT | Yes |  |
+| WBALANCINGACCOUNTID | INTEGER | Yes |  |
+| WDESCRIPTIONID | INTEGER | Yes |  |
+| WCURRENCYID | INTEGER | Yes |  |
+| FFOREXAMOUNT | NUMERIC(12, 2) | Yes |  |
+| WUSERID | INTEGER | Yes |  |
+| UNUSED | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| BUNUSED | SMALLINT | Yes |  |
+| WTAX2ID | INTEGER | Yes |  |
+| FCURRENCYRATE2 | NUMERIC(12, 2) | Yes |  |
+| FTAXRATE2 | NUMERIC(12, 2) | Yes |  |
+| FTAX2AMOUNT | NUMERIC(12, 2) | Yes |  |
+| WJOBCODEID | INTEGER | Yes |  |
+| WPROFILEID | INTEGER | Yes |  |
+| BEXCLUSIVE | SMALLINT | Yes |  |
+| WLINKEDID | INTEGER | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| WDOCID | INTEGER | Yes |  |
+| DPAYMENTDATE | TIMESTAMP | Yes |  |
+| WREMITTANCECOUNT | INTEGER | Yes |  |
+| WPAYMENTTYPE | INTEGER | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_TRANSACT_ACCOUNT` (WACCOUNTID)
+- FOREIGN KEY: `FK_TRANSACT_BATCH` (WBATCHTYPEID)
+- FOREIGN KEY: `FK_TRANSACT_BATCON` (WBATCHID)
+- PRIMARY KEY: `INTEG_148` (WTRANSACTIONID)
+
+## TRANSACT_BUDGET
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WTRANSACTIONID | INTEGER | No |  |
+| DDATE | TIMESTAMP | Yes |  |
+| SREFERENCE | VARCHAR(15) | Yes |  |
+| SDESCRIPTION | VARCHAR(35) | Yes |  |
+| FAMOUNT | NUMERIC(12, 2) | No |  |
+| WUSERID | INTEGER | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| WJOBCODEID | INTEGER | Yes |  |
+| BEXCLUSIVE | SMALLINT | Yes |  |
+| WREPORTINGGROUP1ID | INTEGER | Yes |  |
+| WREPORTINGGROUP2ID | INTEGER | Yes |  |
+| WACCOUNTID | INTEGER | Yes |  |
+| BLASTYEAR | SMALLINT | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_TRANSACT_BUDGET_AC` (WACCOUNTID)
+- PRIMARY KEY: `INTEG_253` (WTRANSACTIONID)
+
+## TYPES
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WTYPEID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(30) | Yes |  |
+| WTYPEPARENT | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_150` (WTYPEID)
+
+## TYPES_TRANSLATE
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WTYPEID | INTEGER | No |  |
+| WLANGUAGEID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(255) | Yes |  |
+
+Constraints:
+
+- FOREIGN KEY: `FK_TYPES_TRANSLATE_TYPE` (WTYPEID)
+- PRIMARY KEY: `PK_TYPES_TRANSLATE` (WTYPEID, WLANGUAGEID)
+
+## UNIT
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WUNITID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(8) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| FUNITQTY | NUMERIC(12, 8) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_152` (WUNITID)
+
+## USERS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WUSERID | INTEGER | No |  |
+| SPASSWORD | VARCHAR(50) | Yes |  |
+| SUSERNAME | VARCHAR(20) | Yes |  |
+| SCREDITNOTENEXTNUMBER | VARCHAR(8) | Yes |  |
+| SINVOICENEXTNUMBER | VARCHAR(8) | Yes |  |
+| SPURCHASENEXTNUMBER | VARCHAR(8) | Yes |  |
+| SGOODSRETURNEDNEXTNUMBER | VARCHAR(8) | Yes |  |
+| SRECEIPTNEXTNUMBER | VARCHAR(8) | Yes |  |
+| SQUOTENEXTNUMBER | VARCHAR(8) | Yes |  |
+| SORDERNEXTNUMBER | VARCHAR(8) | Yes |  |
+| SNEXTBATCHNUMBER | VARCHAR(8) | Yes |  |
+| BDISABLED | SMALLINT | Yes |  |
+| BACCOUNTS | SMALLINT | Yes |  |
+| BSTOCK | SMALLINT | Yes |  |
+| BBATCHENTRY | SMALLINT | Yes |  |
+| BCREDITNOTE | SMALLINT | Yes |  |
+| BINVOICES | SMALLINT | Yes |  |
+| BPURCHASES | SMALLINT | Yes |  |
+| BSTOCKRETURNS | SMALLINT | Yes |  |
+| BRECONCILIATION | SMALLINT | Yes |  |
+| BCREDITORREPORTS | SMALLINT | Yes |  |
+| BDEBTORREPORTS | SMALLINT | Yes |  |
+| BLEDGERREPORTS | SMALLINT | Yes |  |
+| BSTOCKREPORTS | SMALLINT | Yes |  |
+| BUSERREPORTS | SMALLINT | Yes |  |
+| BPOSTING | SMALLINT | Yes |  |
+| BGLOBALPROCESSES | SMALLINT | Yes |  |
+| BSYSTEMSETUP | SMALLINT | Yes |  |
+| USEREMAIL | VARCHAR(30) | Yes |  |
+| BONLINE | SMALLINT | Yes |  |
+| SPCIPADDRESS | VARCHAR(20) | Yes |  |
+| DSYSDATE | TIMESTAMP | Yes |  |
+| BEDITPRICES | SMALLINT | Yes |  |
+| BGLOBALSEQ | SMALLINT | Yes |  |
+| BCASHBOOK | SMALLINT | Yes |  |
+| BONLYPOS | SMALLINT | Yes |  |
+| BPOSSUPER | SMALLINT | Yes |  |
+| BSEARCH | SMALLINT | Yes |  |
+| BEMAIL | SMALLINT | Yes |  |
+| BNOTUSED1 | SMALLINT | Yes |  |
+| WLANGUAGEID | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_154` (WUSERID)
+
+## WORKFLOWTRANSITIONS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WWORKFLOWTRANSID | INTEGER | No |  |
+| STRANSNAME | VARCHAR(64) | Yes |  |
+| SCONDITION | BLOB | Yes |  |
+| WFROMWORKFLOWSTEPID | INTEGER | No |  |
+| WTOWORKFLOWSTEPID | INTEGER | No |  |
+| WLEFTMARK | INTEGER | Yes |  |
+| WTOPMARK | INTEGER | Yes |  |
+| WLEFTENDMARK | INTEGER | Yes |  |
+| WTOPENDMARK | INTEGER | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_283` (WWORKFLOWTRANSID)
+
+## YEARS
+
+| Column | Type | Nullable | Default |
+| --- | --- | --- | --- |
+| WYEARID | INTEGER | No |  |
+| SDESCRIPTION | VARCHAR(50) | Yes |  |
+
+Constraints:
+
+- PRIMARY KEY: `INTEG_82` (WYEARID)
+
