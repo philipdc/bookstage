@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import tcLogo from '../../bin/images/tclogo.png';
 import openHelp from '../../bin/help/open.md?raw';
+import MarkdownRenderer from './MarkdownRenderer.jsx';
 
 const fallbackWorkbenches = [
   {
@@ -10,7 +11,7 @@ const fallbackWorkbenches = [
     sourceType: 'project',
     turboBooksName: '4-EN-UK-GENERIC',
     turboPath: 'D:\\dev2023\\bookstage\\books\\4-EN-UK-GENERIC\\books.fdb',
-    schemaPath: 'D:\\dev2023\\bookstage\\bin\\docs\\schema\\books-schema.md',
+    schemaPath: 'D:\\dev2023\\bookstage\\bin\\docs\\tcschema\\books-schema.md',
     hasTurboBooks: true,
   },
   {
@@ -19,7 +20,7 @@ const fallbackWorkbenches = [
     path: 'C:\\BookStage\\HANDY-BANK',
     sourceType: 'external',
     turboBooksName: 'HANDY-BANK',
-    schemaPath: 'D:\\dev2023\\bookstage\\bin\\docs\\schema\\books-schema.md',
+    schemaPath: 'D:\\dev2023\\bookstage\\bin\\docs\\tcschema\\books-schema.md',
   },
   {
     id: 'demo-network',
@@ -27,7 +28,7 @@ const fallbackWorkbenches = [
     path: 'Z:\\BookStage\\NETWORK-CLIENT',
     sourceType: 'mapped',
     turboBooksName: 'NETWORK-CLIENT',
-    schemaPath: 'D:\\dev2023\\bookstage\\bin\\docs\\schema\\books-schema.md',
+    schemaPath: 'D:\\dev2023\\bookstage\\bin\\docs\\tcschema\\books-schema.md',
   },
   {
     id: 'demo-internet',
@@ -143,7 +144,7 @@ function HelpPane({ mode, setMode, onClose }) {
       <PaneControls mode={mode} setMode={setMode} onClose={onClose} closeLabel="Close help" />
       <h3>Open Help</h3>
       {mode !== 'minimized' && (
-        <pre className="help-text">{openHelp}</pre>
+        <MarkdownRenderer className="help-text">{openHelp}</MarkdownRenderer>
       )}
     </aside>
   );

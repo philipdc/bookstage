@@ -3,7 +3,8 @@ import BankWorkbench from './BankWorkbench.jsx';
 import OpenWorkbench from './OpenWorkbench.jsx';
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import localLeverArchImage from '../../bin/images/levearchfiles.jpg';
+import localLeverArchImage from '../../bin/images/leverarchfiles.jpg';
+import MarkdownRenderer from './MarkdownRenderer.jsx';
 
 const bookStageHomeUrl = 'https://www.turbocash.net/a/pages/bookstage/index.html';
 const leverArchMessageImage = 'https://www.turbocash.net/a/pages/bookstage/images/leverarchfiles.jpg';
@@ -207,7 +208,7 @@ function HelpLibraryScreen() {
           </button>
         )}
         <p className="muted-label">{status}</p>
-        {body ? <pre className="help-markdown">{body}</pre> : <p className="empty-note">Select a Markdown help file from the list.</p>}
+        {body ? <MarkdownRenderer className="help-markdown">{body}</MarkdownRenderer> : <p className="empty-note">Select a Markdown help file from the list.</p>}
       </article>
     </section>
   );

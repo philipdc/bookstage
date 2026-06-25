@@ -7,7 +7,8 @@ import nedbankLogo from '../../bin/images/banklogos/nedbank-logo-clipart.png';
 import otherBankLogo from '../../bin/images/banklogos/otherbank.png';
 import paypalLogo from '../../bin/images/banklogos/PayPal-Logo-PNG-Free-Image.png';
 import standardBankLogo from '../../bin/images/banklogos/standard-bank-logo-standard-bank-logo.png';
-import bankHelp from '../../bin/help/bank.odt?url';
+import bankHelp from '../../bin/help/bank.md?raw';
+import MarkdownRenderer from './MarkdownRenderer.jsx';
 
 const api = window.bookStageAPI || window.tcAPI;
 
@@ -103,11 +104,41 @@ function makeImportPrefix(importIndex) {
   return `${letter}${number}`;
 }
 
+function normaliseImportPrefix(value) {
+  return String(value || '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, '')
+    .slice(0, 3) || 'A01';
+}
+
+function incrementImportPrefix(value) {
+  const prefix = normaliseImportPrefix(value);
+  const match = prefix.match(/^([A-Z]+)(\d+)$/);
+  if (!match) return prefix;
+
+  const [, letters, digits] = match;
+  const nextNumber = Number(digits) + 1;
+  const maxNumber = Number('9'.repeat(digits.length));
+  if (nextNumber <= maxNumber) return `${letters}${String(nextNumber).padStart(digits.length, '0')}`;
+
+  const nextLetter = String.fromCharCode(letters.charCodeAt(0) + 1);
+  return `${nextLetter}${'1'.padStart(digits.length, '0')}`;
+}
+
 function applyImportRefs(transactions, prefix) {
+  const cleanPrefix = normaliseImportPrefix(prefix);
   return transactions.map((transaction, index) => ({
     ...transaction,
-    importRef: `${prefix}${String(index + 1).padStart(3, '0')}`,
+    importRef: `${cleanPrefix}${String(index + 1).padStart(3, '0')}`,
   }));
+}
+
+function applyOpeningBalance(transactions, openingBalance) {
+  let runningBalance = Number(openingBalance || 0);
+  return transactions.map((transaction) => {
+    runningBalance = Number((runningBalance + Number(transaction.amount || 0)).toFixed(2));
+    return { ...transaction, balance: runningBalance };
+  });
 }
 
 function autoAllocate(transaction, allocationAccounts, history) {
@@ -133,6 +164,30 @@ function sortAccounts(accounts, sort) {
     const rightValue = String(right[sort.field] || '').toLowerCase();
     return leftValue.localeCompare(rightValue, undefined, { numeric: true }) * direction;
   });
+}
+
+function uniqueAccounts(accounts) {
+  const seen = new Set();
+  return accounts
+    .filter((account) => account?.code)
+    .map((account) => ({
+      code: String(account.code || '').trim(),
+      name: String(account.name || '').trim() || 'Unnamed account',
+      type: String(account.type || 'Account').trim(),
+    }))
+    .filter((account) => {
+      const key = `${account.type}:${account.code}`.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function compareGridValue(left, right, field) {
+  if (field === 'amount' || field === 'balance') {
+    return Number(left[field] || 0) - Number(right[field] || 0);
+  }
+  return String(left[field] || '').localeCompare(String(right[field] || ''), undefined, { numeric: true, sensitivity: 'base' });
 }
 
 function AccountLookup({ value, accounts, onChange, placeholder = 'Empty', storageKey = 'bookstage:account-lookup-sort' }) {
@@ -165,6 +220,7 @@ function AccountLookup({ value, accounts, onChange, placeholder = 'Empty', stora
   function moveToMatch(key) {
     const field = /^[0-9]$/.test(key) ? 'code' : /^[a-z]$/i.test(key) ? 'name' : '';
     if (!field) return false;
+    setSort((current) => current.field === field ? current : { ...current, field });
     const index = rows.findIndex((row, rowIndex) => rowIndex > 0 && String(row[field] || '').toLowerCase().startsWith(key.toLowerCase()));
     if (index >= 0) {
       setActiveIndex(index);
@@ -359,14 +415,14 @@ function SetupModal({ setup, selectedBank, batchChoices, onChooseFolder, onSave,
   );
 }
 
-function ImportModal({ setup, parsed, filePath, status, importPrefix, duplicateCount, onPrefixChange, onBrowse, onParse, onImport, onImportNewOnly, onCancel }) {
+function ImportModal({ setup, parsed, filePath, status, importPrefix, duplicateCount, onPrefixChange, onRowRefChange, onBrowse, onParse, onImport, onImportNewOnly, onCancel }) {
   return (
     <section className="modal-backdrop">
       <div className="bank-modal import-modal">
         <h3>Import bank statement</h3>
         <p className="modal-subtitle">Default folder: {setup.incomingFolder}</p>
         <div className="bank-form-grid">
-          <label>Import reference prefix<input value={importPrefix} onChange={(event) => onPrefixChange(event.target.value.toUpperCase().slice(0, 3))} /></label>
+          <label>Import reference prefix<input value={importPrefix} onChange={(event) => onPrefixChange(event.target.value)} /></label>
           <label>File<div className="input-with-button"><input value={filePath} readOnly placeholder="Choose a bank statement file" /><button type="button" className="ghost-button" onClick={onBrowse}>Browse</button></div></label>
         </div>
         <div className="modal-actions left-actions">
@@ -386,7 +442,7 @@ function ImportModal({ setup, parsed, filePath, status, importPrefix, duplicateC
                 <tbody>
                   {parsed.transactions.map((transaction) => (
                     <tr key={transaction.id} className={transaction.isDuplicate ? 'duplicate-row' : ''}>
-                      <td><input className="ref-input" value={transaction.importRef} onChange={(event) => { transaction.importRef = event.target.value; onPrefixChange(importPrefix); }} /></td>
+                      <td><input className="ref-input" value={transaction.importRef} onChange={(event) => onRowRefChange(transaction.id, event.target.value)} /></td>
                       <td>{transaction.date}</td>
                       <td>{transaction.description}</td>
                       <td className="align-right">{money(transaction.amount)}</td>
@@ -484,10 +540,11 @@ export default function BankWorkbench() {
   const [dragging, setDragging] = useState(false);
   const [importFile, setImportFile] = useState('');
   const [parsedImport, setParsedImport] = useState(null);
-  const [importPrefix, setImportPrefix] = useState(() => makeImportPrefix(Number(localStorage.getItem('bookstage:bank-import-index') || '1')));
+  const [importPrefix, setImportPrefix] = useState(() => localStorage.getItem('bookstage:bank-import-prefix') || makeImportPrefix(Number(localStorage.getItem('bookstage:bank-import-index') || '1')));
   const [batchTypes, setBatchTypes] = useState([]);
   const [selectedBatch, setSelectedBatch] = useState('');
   const [status, setStatus] = useState('Bank workbench ready');
+  const [gridSort, setGridSort] = useState(() => readJsonStorage('bookstage:bank-grid-sort', { field: 'date', direction: 'asc' }));
 
   useEffect(() => {
     const active = readActiveWorkbench();
@@ -501,6 +558,10 @@ export default function BankWorkbench() {
   useEffect(() => {
     localStorage.setItem('bookstage:bank-setup:v2', JSON.stringify(setupByBank));
   }, [setupByBank]);
+
+  useEffect(() => {
+    localStorage.setItem('bookstage:bank-grid-sort', JSON.stringify(gridSort));
+  }, [gridSort]);
 
   useEffect(() => {
     function openHelpPane() { setShowHelp(true); }
@@ -527,11 +588,19 @@ export default function BankWorkbench() {
     setBalanceErrors([]);
 
     if (!api?.getAccounts) return;
-    api.getAccounts(turboPath)
-      .then((accounts) => {
-        if (!Array.isArray(accounts) || accounts.length === 0) return;
-        const normalised = accounts.map((account) => ({ code: account.code, name: account.name, type: account.type || 'Account' }));
-        setAllocationAccounts([...normalised, ...fallbackAllocationAccounts]);
+    Promise.all([
+      api.getAccounts(turboPath).catch(() => []),
+      api.getDebtors ? api.getDebtors(turboPath).catch(() => []) : Promise.resolve([]),
+      api.getCreditors ? api.getCreditors(turboPath).catch(() => []) : Promise.resolve([]),
+    ])
+      .then(([accounts, debtors, creditors]) => {
+        const normalised = uniqueAccounts([
+          ...(Array.isArray(accounts) ? accounts.map((account) => ({ code: account.code, name: account.name, type: account.type || 'Account' })) : []),
+          ...(Array.isArray(debtors) ? debtors.map((account) => ({ code: account.code, name: account.name, type: 'Debtor' })) : []),
+          ...(Array.isArray(creditors) ? creditors.map((account) => ({ code: account.code, name: account.name, type: 'Creditor' })) : []),
+          ...fallbackAllocationAccounts,
+        ]);
+        setAllocationAccounts(normalised);
       })
       .catch(() => setStatus('Using prototype account lists until the TurboCASH account query is finalised.'));
 
@@ -644,13 +713,43 @@ export default function BankWorkbench() {
     if (filters.end && transaction.date > filters.end) return false;
     return true;
   });
+  const displayedTransactions = useMemo(() => {
+    const direction = gridSort.direction === 'desc' ? -1 : 1;
+    return [...filteredTransactions].sort((left, right) => compareGridValue(left, right, gridSort.field) * direction);
+  }, [filteredTransactions, gridSort]);
   const duplicateCount = parsedImport?.transactions.filter((transaction) => transaction.isDuplicate).length || 0;
   const loadRows = useMemo(() => {
     const selected = new Set(selectedRows);
-    return selected.size
-      ? transactions.filter((transaction) => selected.has(transaction.id))
-      : filteredTransactions;
-  }, [filteredTransactions, selectedRows, transactions]);
+    return transactions.filter((transaction) => selected.has(transaction.id));
+  }, [selectedRows, transactions]);
+
+  function toggleGridSort(field) {
+    setGridSort((current) => ({
+      field,
+      direction: current.field === field && current.direction === 'asc' ? 'desc' : 'asc',
+    }));
+  }
+
+  function sortArrow(field) {
+    if (gridSort.field !== field) return '-';
+    return gridSort.direction === 'asc' ? '^' : 'v';
+  }
+
+  function updateImportPrefix(value) {
+    const prefix = normaliseImportPrefix(value);
+    setImportPrefix(prefix);
+    localStorage.setItem('bookstage:bank-import-prefix', prefix);
+    setParsedImport((current) => current ? { ...current, transactions: applyImportRefs(current.transactions, prefix) } : current);
+  }
+
+  function updatePreviewImportRef(id, value) {
+    setParsedImport((current) => current ? {
+      ...current,
+      transactions: current.transactions.map((transaction) => (
+        transaction.id === id ? { ...transaction, importRef: value.toUpperCase() } : transaction
+      )),
+    } : current);
+  }
 
   function selectBank(code) {
     setSelectedBankCode(code);
@@ -666,7 +765,7 @@ export default function BankWorkbench() {
     if (event.shiftKey && lastSelectedIndex !== null) {
       const start = Math.min(lastSelectedIndex, index);
       const end = Math.max(lastSelectedIndex, index);
-      setSelectedRows(filteredTransactions.slice(start, end + 1).map((row) => row.id));
+      setSelectedRows(displayedTransactions.slice(start, end + 1).map((row) => row.id));
     } else if (event.ctrlKey) {
       setSelectedRows((current) => current.includes(id) ? current.filter((rowId) => rowId !== id) : [...current, id]);
       setLastSelectedIndex(index);
@@ -677,16 +776,16 @@ export default function BankWorkbench() {
   }
 
   function handleGridKey(event) {
-    if (filteredTransactions.length === 0) return;
-    const currentIndex = Math.max(0, filteredTransactions.findIndex((row) => row.id === selectedRows[selectedRows.length - 1]));
-    const keyMoves = { Home: 0, End: filteredTransactions.length - 1, PageUp: Math.max(0, currentIndex - 20), PageDown: Math.min(filteredTransactions.length - 1, currentIndex + 20) };
+    if (displayedTransactions.length === 0) return;
+    const currentIndex = Math.max(0, displayedTransactions.findIndex((row) => row.id === selectedRows[selectedRows.length - 1]));
+    const keyMoves = { Home: 0, End: displayedTransactions.length - 1, PageUp: Math.max(0, currentIndex - 20), PageDown: Math.min(displayedTransactions.length - 1, currentIndex + 20) };
     if (event.key in keyMoves) {
       event.preventDefault();
-      const row = filteredTransactions[keyMoves[event.key]];
+      const row = displayedTransactions[keyMoves[event.key]];
       selectRow(row.id, keyMoves[event.key], { shiftKey: event.shiftKey });
     }
     if (event.key === 'Delete') {
-      setShowDeleteConfirm(true);
+      requestDelete();
     }
   }
 
@@ -716,14 +815,14 @@ export default function BankWorkbench() {
 
   function requestDelete() {
     if (selectedRows.length === 0) {
-      setShowDeleteAllConfirm(true);
+      setStatus('Select one or more bank rows before using Delete.');
       return;
     }
     setShowDeleteConfirm(true);
   }
 
   function deleteAllVisible() {
-    const visibleIds = new Set(filteredTransactions.map((transaction) => transaction.id));
+    const visibleIds = new Set(displayedTransactions.map((transaction) => transaction.id));
     setTransactions((current) => current.filter((transaction) => !visibleIds.has(transaction.id)));
     setSelectedRows([]);
     setShowDeleteAllConfirm(false);
@@ -777,7 +876,11 @@ export default function BankWorkbench() {
     try {
       const parsed = await api.parseBankStatement(importFile);
       const existing = new Set(transactions.map(transactionKey));
-      const referenced = applyImportRefs(parsed.transactions, importPrefix).map((transaction) => ({
+      const shouldRebaseBalances = selectedBank.name.toLowerCase().includes('paypal') || importFile.toLowerCase().includes('paypal');
+      const sourceTransactions = shouldRebaseBalances
+        ? applyOpeningBalance(parsed.transactions, setup.openingBalance)
+        : parsed.transactions;
+      const referenced = applyImportRefs(sourceTransactions, importPrefix).map((transaction) => ({
         ...transaction,
         isDuplicate: existing.has(transactionKey(transaction)),
       }));
@@ -811,9 +914,9 @@ export default function BankWorkbench() {
       }
     }
 
-    const nextIndex = Number(localStorage.getItem('bookstage:bank-import-index') || '1') + 1;
-    localStorage.setItem('bookstage:bank-import-index', String(nextIndex));
-    setImportPrefix(makeImportPrefix(nextIndex));
+    const nextPrefix = incrementImportPrefix(importPrefix);
+    localStorage.setItem('bookstage:bank-import-prefix', nextPrefix);
+    setImportPrefix(nextPrefix);
     setTransactions((current) => [...current, ...imported]);
     setShowImport(false);
     setParsedImport(null);
@@ -826,7 +929,7 @@ export default function BankWorkbench() {
   }
 
   function toggleAllVisible(checked) {
-    setSelectedRows(checked ? filteredTransactions.map((transaction) => transaction.id) : []);
+    setSelectedRows(checked ? displayedTransactions.map((transaction) => transaction.id) : []);
   }
 
   function toggleOne(id, checked) {
@@ -846,8 +949,26 @@ export default function BankWorkbench() {
   }
 
   function loadToBatch() {
+    if (selectedRows.length === 0) {
+      setStatus('Select one or more bank rows before using Load.');
+      return;
+    }
     setShowLoadConfirm(true);
     setStatus(`${loadRows.length} transaction(s) selected for TurboCASH batch confirmation.`);
+  }
+
+  async function installBookStage() {
+    if (!api?.installBookStage) {
+      setStatus('Installer target picker is available in Electron mode.');
+      return;
+    }
+
+    try {
+      const result = await api.installBookStage();
+      setStatus(result ? `BookStage installed to ${result}` : 'BookStage install cancelled.');
+    } catch (error) {
+      setStatus(`BookStage install failed: ${error.message}`);
+    }
   }
 
   async function exportTabDelimitedBatch() {
@@ -902,6 +1023,7 @@ export default function BankWorkbench() {
           <button type="button" className="danger-button" onClick={requestDelete}>Delete</button>
           <button type="button" className="ghost-button" onClick={checkBalances}>Check</button>
           <button type="button" className="safe-button" onClick={loadToBatch}>Load</button>
+          <button type="button" className="ghost-button" onClick={installBookStage}>Install</button>
         </div>
       </div>
 
@@ -918,7 +1040,7 @@ export default function BankWorkbench() {
               <h3>{selectedBank.name} bank statement replication</h3>
               <p className="muted-label">Input Batch: {loadBatch} | Incoming: {setup.incomingFolder}</p>
             </div>
-            <span className="status-pill">{filteredTransactions.length} visible / {transactions.length} rows</span>
+            <span className="status-pill">{displayedTransactions.length} visible / {transactions.length} rows</span>
           </div>
           <div className="bank-grid-wrap" tabIndex={0} onKeyDown={handleGridKey}>
             <table className="bank-grid">
@@ -928,15 +1050,23 @@ export default function BankWorkbench() {
                     <input
                       type="checkbox"
                       aria-label="Select all visible transactions"
-                      checked={filteredTransactions.length > 0 && filteredTransactions.every((transaction) => selectedRows.includes(transaction.id))}
+                      checked={displayedTransactions.length > 0 && displayedTransactions.every((transaction) => selectedRows.includes(transaction.id))}
                       onChange={(event) => toggleAllVisible(event.target.checked)}
+                      onMouseDown={(event) => event.stopPropagation()}
                     />
                   </th>
-                  <th>Ref</th><th>Date</th><th>Description</th><th>Amount</th><th>Balance</th><th>Account allocation</th><th>Tax</th><th>Status</th>
+                  <th><button type="button" className="grid-sort-button" onClick={() => toggleGridSort('importRef')}>Ref {sortArrow('importRef')}</button></th>
+                  <th><button type="button" className="grid-sort-button" onClick={() => toggleGridSort('date')}>Date {sortArrow('date')}</button></th>
+                  <th><button type="button" className="grid-sort-button" onClick={() => toggleGridSort('description')}>Description {sortArrow('description')}</button></th>
+                  <th><button type="button" className="grid-sort-button" onClick={() => toggleGridSort('amount')}>Amount {sortArrow('amount')}</button></th>
+                  <th><button type="button" className="grid-sort-button" onClick={() => toggleGridSort('balance')}>Balance {sortArrow('balance')}</button></th>
+                  <th><button type="button" className="grid-sort-button" onClick={() => toggleGridSort('accountCode')}>Account allocation {sortArrow('accountCode')}</button></th>
+                  <th><button type="button" className="grid-sort-button" onClick={() => toggleGridSort('taxCode')}>Tax {sortArrow('taxCode')}</button></th>
+                  <th><button type="button" className="grid-sort-button" onClick={() => toggleGridSort('status')}>Status {sortArrow('status')}</button></th>
                 </tr>
               </thead>
               <tbody onMouseLeave={() => setDragging(false)}>
-                {filteredTransactions.map((transaction, index) => (
+                {displayedTransactions.map((transaction, index) => (
                   <tr
                     key={transaction.id}
                     className={`${selectedRows.includes(transaction.id) ? 'selected-bank-row' : ''} ${balanceErrors.includes(transaction.id) ? 'balance-error-row' : ''}`}
@@ -951,6 +1081,7 @@ export default function BankWorkbench() {
                         aria-label={`Select ${transaction.description}`}
                         checked={selectedRows.includes(transaction.id)}
                         onChange={(event) => toggleOne(transaction.id, event.target.checked)}
+                        onMouseDown={(event) => event.stopPropagation()}
                         onClick={(event) => event.stopPropagation()}
                       />
                     </td>
@@ -968,7 +1099,7 @@ export default function BankWorkbench() {
                     <td><span className={`allocation-status ${transaction.accountCode ? 'ok' : 'empty'}`}>{transaction.status}</span></td>
                   </tr>
                 ))}
-                {filteredTransactions.length === 0 && (
+                {displayedTransactions.length === 0 && (
                   <tr>
                     <td colSpan={9} className="empty-note">
                       No bank transactions are loaded for this workbench and filter.
@@ -985,7 +1116,7 @@ export default function BankWorkbench() {
             {showHelp && (
               <Pane title="Bank Help" onClose={() => setShowHelp(false)}>
                 <p>Bank processing manages imported statement rows before they are loaded into TurboCASH cash book batches.</p>
-                <p><a href={bankHelp}>Open bank help document</a></p>
+                <MarkdownRenderer className="help-text">{bankHelp}</MarkdownRenderer>
               </Pane>
             )}
             {showChat && (
@@ -1001,9 +1132,9 @@ export default function BankWorkbench() {
       <p className="open-status-line">{status}</p>
 
       {showSetup && <SetupModal setup={setup} selectedBank={selectedBank} batchChoices={bankBatchChoices} onChooseFolder={chooseImportFolder} onCancel={() => setShowSetup(false)} onSave={(draft) => { setSetupByBank((current) => ({ ...current, [setupKey]: draft })); setSelectedBatch(draft.batchType); setShowSetup(false); setStatus(`${selectedBank.name} setup saved.`); }} />}
-      {showImport && <ImportModal setup={setup} filePath={importFile} parsed={parsedImport} status={status} importPrefix={importPrefix} duplicateCount={duplicateCount} onPrefixChange={setImportPrefix} onBrowse={browseStatement} onParse={parseStatement} onImport={importTransactions} onImportNewOnly={() => importTransactions(true)} onCancel={() => { setShowImport(false); setParsedImport(null); setImportFile(''); }} />}
+      {showImport && <ImportModal setup={setup} filePath={importFile} parsed={parsedImport} status={status} importPrefix={importPrefix} duplicateCount={duplicateCount} onPrefixChange={updateImportPrefix} onRowRefChange={updatePreviewImportRef} onBrowse={browseStatement} onParse={parseStatement} onImport={importTransactions} onImportNewOnly={() => importTransactions(true)} onCancel={() => { setShowImport(false); setParsedImport(null); setImportFile(''); }} />}
       {showDeleteConfirm && <ConfirmModal title="Delete transactions?" message={`Do you want to delete ${selectedRows.length} selected transaction(s)?`} onYes={deleteSelected} onNo={() => setShowDeleteConfirm(false)} />}
-      {showDeleteAllConfirm && <ConfirmModal title="Delete all visible transactions?" message={`No transactions are selected. Do you want to delete all ${filteredTransactions.length} visible transaction(s)?`} onYes={() => { setShowDeleteAllConfirm(false); setShowDeleteFinalAll(true); setSelectedRows(filteredTransactions.map((transaction) => transaction.id)); }} onNo={() => setShowDeleteAllConfirm(false)} />}
+      {showDeleteAllConfirm && <ConfirmModal title="Delete all visible transactions?" message={`No transactions are selected. Do you want to delete all ${displayedTransactions.length} visible transaction(s)?`} onYes={() => { setShowDeleteAllConfirm(false); setShowDeleteFinalAll(true); setSelectedRows(displayedTransactions.map((transaction) => transaction.id)); }} onNo={() => setShowDeleteAllConfirm(false)} />}
       {showDeleteFinalAll && <ConfirmModal title="Are you sure?" message="This will delete every transaction currently visible in the filter." yesClass="danger-button" noClass="safe-button" onYes={deleteAllVisible} onNo={() => setShowDeleteFinalAll(false)} />}
       {showLoadConfirm && <LoadModal count={readyCount} batchTypes={bankBatchChoices} selectedBatch={loadBatch} onSelectBatch={setSelectedBatch} onExport={exportTabDelimitedBatch} onDirect={loadDirectToInputBatch} onNo={() => setShowLoadConfirm(false)} />}
       {loadResultMessage && <NoticeModal title="Input Batch load" message={loadResultMessage} onClose={() => setLoadResultMessage('')} />}
